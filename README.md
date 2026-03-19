@@ -4,9 +4,9 @@
 
 ---
 
-## 🧩 What is StockIQ?
+## 🧩 Overview
 
-Our project helps small businesses track their inventory, manage suppliers, handle purchase orders, and monitor stock levels — with real-time low stock alerts and a clean, intuitive interface.
+This system helps small businesses track their inventory, manage suppliers, handle purchase orders, and monitor stock levels — with real-time low stock alerts and a clean, intuitive interface.
 
 ---
 
