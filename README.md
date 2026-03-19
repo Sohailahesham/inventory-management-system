@@ -3,11 +3,10 @@
 A responsive web application for managing products, suppliers, and inventory.
 
 ## Technologies
-HTML
-CSS
+HTML5
+CSS3
 Bootstrap
 JavaScript
-jQuery
 
 ## Features
 Product CRUD
@@ -57,8 +56,8 @@ Low stock alerts
         └── activity.js         # Logic for the audit log
 
 ## Team
-Team Leader: Your Name
+Team Leader: Abdulrahman Siraj El-deen
 Members:
-Member 1
-Member 2
-Member 3
+Sohaila Hesham
+Ammar Fayez
+Omar Alsheikh
