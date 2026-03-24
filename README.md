@@ -86,7 +86,7 @@ inventory-management-system/
 
 ### Prerequisites
 
-- Node.js and npm installed
+- npm installed
 
 ### Installation
 
