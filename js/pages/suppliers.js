@@ -13,6 +13,7 @@ let suppliers = [];
 export async function loadSuppliers() {
   await loadData();
   renderSuppliers();
+  exposeTableHandlers();
   setupEventListeners();
 }
 
@@ -75,6 +76,28 @@ function setupEventListeners() {
   document
     .getElementById("searchSup")
     ?.addEventListener("input", filterSuppliers);
+}
+
+function exposeTableHandlers() {
+  window.handleDelete = handleDelete;
+}
+
+async function handleDelete(id) {
+  let s = suppliers.find((e) => e.id == id);
+  if (!s) return;
+
+  let productsCount = products.filter((p) => p.supplierId == id).length;
+  if (productsCount > 0) {
+    alert("You can't delete this supplier because it has products.");
+    return;
+  }
+
+  let ok = confirm(`Delete supplier "${s.name}"?`);
+  if (!ok) return;
+
+  await deleteData("suppliers", id);
+  await loadData();
+  filterSuppliers();
 }
 
 //* search function

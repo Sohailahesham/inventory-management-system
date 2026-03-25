@@ -13,6 +13,7 @@ let suppliers = [];
 export async function loadCategories() {
   await loadData();
   renderCategories();
+  exposeTableHandlers();
   setupEventListeners();
 }
 
@@ -65,6 +66,28 @@ function setupEventListeners() {
   document
     .getElementById("searchCat")
     ?.addEventListener("input", filterCategories);
+}
+
+function exposeTableHandlers() {
+  window.handleDelete = handleDelete;
+}
+
+async function handleDelete(id) {
+  let c = categories.find((e) => e.id == id);
+  if (!c) return;
+
+  let productsCount = products.filter((p) => p.categoryId == id).length;
+  if (productsCount > 0) {
+    alert("You can't delete this category because it has products.");
+    return;
+  }
+
+  let ok = confirm(`Delete category "${c.name}"?`);
+  if (!ok) return;
+
+  await deleteData("categories", id);
+  await loadData();
+  filterCategories();
 }
 
 //* search
