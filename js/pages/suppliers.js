@@ -1,15 +1,14 @@
+import { getModal } from "../components/modal.js";
+import renderPagination, { paginateData } from "../components/pagination.js";
 import renderTable from "../components/table.js";
-import {
-  fetchData,
-  deleteData,
-} from "../services/api.js";
+import { fetchData, deleteData } from "../services/api.js";
 
 let products = [];
 let categories = [];
 let suppliers = [];
 let lastFiltered = [];
 let currentPage = 1;
-let PAGE_SIZE = 2;
+let PAGE_SIZE = 5;
 
 export async function loadSuppliers() {
   await loadData();
@@ -81,30 +80,51 @@ function setupEventListeners() {
   document
     .getElementById("searchSup")
     ?.addEventListener("input", filterSuppliers);
-}
+  //^ Edit & delete product
+  document
+    .querySelector("#suppliersTableContainer")
+    .addEventListener("click", function (e) {
+      const editBtn = e.target.closest(".edit-btn");
+      const deleteBtn = e.target.closest(".delete-btn");
+      if (editBtn) {
+        const id = editBtn.dataset.id;
+        handleEdit(id);
+      } else if (deleteBtn) {
+        const id = deleteBtn.dataset.id;
+        handleDelete(id);
+      }
+      //& pagination
+      const pageBtn = e.target.closest(".page-link");
+      if (pageBtn) {
+        const page = Number(pageBtn.dataset.page);
+        const totalPages = Math.ceil(lastFiltered.length / PAGE_SIZE);
+        if (page < 1 || page > totalPages) return;
+        currentPage = page;
+        document.getElementById("suppliersTableContainer").innerHTML =
+          getTableHtml(lastFiltered);
+        return;
+      }
+    });
+  //& Limit
+  document
+    .querySelector("#suppliersTableContainer")
+    .addEventListener("change", (e) => {
+      const pageSizeSelect = e.target.closest(".page-size-select");
+      if (pageSizeSelect) {
+        PAGE_SIZE = Number(pageSizeSelect.value);
+        currentPage = 1;
+        document.getElementById("suppliersTableContainer").innerHTML =
+          getTableHtml(lastFiltered);
+        return;
+      }
+    });
 
-function exposeTableHandlers() {
-  window.handleDelete = handleDelete;
-}
-
-async function handleDelete(id) {
-  let s = suppliers.find((e) => e.id == id);
-  if (!s) return;
-
-  let productsCount = products.filter((p) => p.supplierId == id).length;
-  if (productsCount > 0) {
-    alert("You can't delete this supplier because it has products.");
-    return;
-  }
-
-  let ok = confirm(`Delete supplier "${s.name}"?`);
-  if (!ok) return;
-
-  await deleteData("suppliers", id);
-  await loadData();
-  lastFiltered = [...suppliers];
-  currentPage = 1;
-  filterSuppliers();
+  //^ add
+  document
+    .querySelector("#addSupplierBtn")
+    .addEventListener("click", function () {
+      handleAdd();
+    });
 }
 
 //* search function
@@ -149,4 +169,34 @@ function updateStats(count, searchTerm) {
 function getProductsNumber(id) {
   let count = products.filter((p) => p.supplierId == id).length;
   return `<span class="badge rounded-pill px-2" style="background:#eff6ff; color:#3b82f6;">${count}</span>`;
+}
+
+//* add button
+function handleAdd(id = "") {
+  getModal("suppliers", "Add", id);
+}
+//* edit button
+function handleEdit(id) {
+  getModal("suppliers", "Edit", id);
+}
+
+//* delete button
+async function handleDelete(id) {
+  let s = suppliers.find((e) => e.id == id);
+  if (!s) return;
+
+  let productsCount = products.filter((p) => p.supplierId == id).length;
+  if (productsCount > 0) {
+    alert("You can't delete this supplier because it has products.");
+    return;
+  }
+
+  let ok = confirm(`Delete supplier "${s.name}"?`);
+  if (!ok) return;
+
+  await deleteData("suppliers", id);
+  await loadData();
+  lastFiltered = [...suppliers];
+  currentPage = 1;
+  filterSuppliers();
 }

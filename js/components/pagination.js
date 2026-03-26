@@ -13,7 +13,7 @@ export default function renderPagination(totalItems, currentPage, pageSize) {
       <div class="d-flex justify-content-between align-items-center m-4">
         <div class="d-flex align-items-center gap-3">
           <small class="text-muted text-nowrap">Rows per page:</small>
-          <select class="form-select form-select-sm border-0 shadow-none">
+          <select class="form-select form-select-sm border-0 shadow-none page-size-select">
             ${[5, 10, 25, 50]
               .map(
                 (n) => `

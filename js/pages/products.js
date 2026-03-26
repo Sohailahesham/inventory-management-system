@@ -126,16 +126,6 @@ function setupEventListeners() {
         return;
       }
 
-      //& Limit
-      const pageSizeSelect = e.target.closest(".page-size-select");
-      if (pageSizeSelect) {
-        PAGE_SIZE = Number(pageSizeSelect.value);
-        currentPage = 1;
-        document.getElementById("productsTableContainer").innerHTML =
-          getTableHtml(lastFiltered);
-        return;
-      }
-
       //& edit
       const editBtn = e.target.closest(".edit-btn");
       if (editBtn) {
@@ -147,6 +137,20 @@ function setupEventListeners() {
       const deleteBtn = e.target.closest(".delete-btn");
       if (deleteBtn) {
         handleDelete(deleteBtn.dataset.id);
+      }
+    });
+
+  //& Limit
+  document
+    .querySelector("#productsTableContainer")
+    .addEventListener("change", (e) => {
+      const pageSizeSelect = e.target.closest(".page-size-select");
+      if (pageSizeSelect) {
+        PAGE_SIZE = Number(pageSizeSelect.value);
+        currentPage = 1;
+        document.getElementById("productsTableContainer").innerHTML =
+          getTableHtml(lastFiltered);
+        return;
       }
     });
 
@@ -256,33 +260,33 @@ function handleProduct_Edit_Add(id = "") {
 }
 
 //* Display modal with form for product
-async function displayProductForm(id){
+async function displayProductForm(id) {
   //^ if user click edit button then i must select which product he clicked
-  let product='';
-  if(id){
-    product =  await fetchData(`products/${id}`);
+  let product = "";
+  if (id) {
+    product = await fetchData(`products/${id}`);
   }
   //^ remove if there is another modal was shown
   document.querySelector("#productModal")?.remove();
   //^ make html code for modal contain form if edit then data will be exist in inputs if add then won't be data exist in inputs
-  const html=`
+  const html = `
   <div class="modal fade" id="productModal" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4>${id?'Edit':'Add'} Product</h4>
+          <h4>${id ? "Edit" : "Add"} Product</h4>
         </div>
         <div class="modal-body">
           <form id='productForm'>
             <div class="row mb-3">
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="name">Product Name *</label>
-                <input type="text" class="form-control" name="name" placeholder="e.g Laptop Pro" value= "${id?product.name:''}" >
+                <input type="text" class="form-control" name="name" placeholder="e.g Laptop Pro" value= "${id ? product.name : ""}" >
                 <div class="text-danger fw-bold errorMes errorMes-name"></div>
               </div>
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="sku">SKU *</label>
-                <input type="text" class="form-control" name='sku'  placeholder="e.g LP-001" value="${id?product.sku:''}">
+                <input type="text" class="form-control" name='sku'  placeholder="e.g LP-001" value="${id ? product.sku : ""}">
                 <div class="text-danger fw-bold errorMes errorMes-sku"></div>
               </div>
             </div>
@@ -290,11 +294,11 @@ async function displayProductForm(id){
             <div class="row mb-3">
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="categoryId">Category *</label>
-                ${displayOptions('category',product.categoryId,categories)}
+                ${displayOptions("category", product.categoryId, categories)}
               </div>
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="supplierId">Supplier *</label>
-                ${displayOptions('supplier',product.supplierId,suppliers)}
+                ${displayOptions("supplier", product.supplierId, suppliers)}
               </div>
             </div>
 
@@ -302,13 +306,13 @@ async function displayProductForm(id){
             <div class="row mb-3">
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="price">Pice (EGP) *</label>
-                <input type="number" class="form-control" name="price" placeholder="0.00" value= "${id?product.price:''}" >
+                <input type="number" class="form-control" name="price" placeholder="0.00" value= "${id ? product.price : ""}" >
                 <div class="text-danger fw-bold errorMes errorMes-price"></div>
 
               </div>
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="quantity">Quantity *</label>
-                <input type="number" class="form-control" name='quantity'  placeholder="0" value="${id?product.quantity:''}">
+                <input type="number" class="form-control" name='quantity'  placeholder="0" value="${id ? product.quantity : ""}">
                 <div class="text-danger fw-bold errorMes errorMes-quantity"></div>
 
               </div>
@@ -318,7 +322,7 @@ async function displayProductForm(id){
             <div class="row mb-3">
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="reorderLevel">Reorder Level *</label>
-                <input type="number" class="form-control" name="reorderLevel" placeholder="5" value= "${id?product.reorderLevel:''}" >
+                <input type="number" class="form-control" name="reorderLevel" placeholder="5" value= "${id ? product.reorderLevel : ""}" >
                 <div class="text-danger fw-bold errorMes errorMes-reorderLevel"></div>
 
               </div>
@@ -340,26 +344,29 @@ async function displayProductForm(id){
   </div>
   `;
   //^ show modal
-  document.body.insertAdjacentHTML('beforeend',html);
+  document.body.insertAdjacentHTML("beforeend", html);
   const modal = new bootstrap.Modal(document.querySelector("#productModal"));
   modal.show();
   // event
-  document.querySelector('.save-btn').addEventListener('click',async function(e){
+  document
+    .querySelector(".save-btn")
+    .addEventListener("click", async function (e) {
       const form = document.querySelector("#productForm");
       let data = Object.fromEntries(new FormData(form));
-    if(isVaildProductData(data,id)){
-      if(id){//edit
-        products=await updateData('products',id,data);
-      }
-      else{//add
-        products=await postData('products',data);
+      if (isVaildProductData(data, id)) {
+        if (id) {
+          //edit
+          products = await updateData("products", id, data);
+        } else {
+          //add
+          products = await postData("products", data);
         }
         await loadData();
         renderProducts();
       }
     });
   // cancel
-  document.querySelector(".close-btn").addEventListener('click', function() {
+  document.querySelector(".close-btn").addEventListener("click", function () {
     if (confirm("Are you sure you want to discard changes?")) {
       const modalElement = document.querySelector("#productModal");
       const modalInstance = bootstrap.Modal.getInstance(modalElement);

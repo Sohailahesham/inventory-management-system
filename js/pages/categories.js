@@ -1,15 +1,13 @@
 import renderTable from "../components/table.js";
-import {
-  fetchData,
-  deleteData,
-} from "../services/api.js";
+import { fetchData, deleteData } from "../services/api.js";
 import { getModal } from "../components/modal.js";
+import renderPagination, { paginateData } from "../components/pagination.js";
 let products = [];
 let categories = [];
 let suppliers = [];
 let lastFiltered = [];
 let currentPage = 1;
-let PAGE_SIZE = 2;
+let PAGE_SIZE = 5;
 
 export async function loadCategories() {
   await loadData();
@@ -72,20 +70,16 @@ function setupEventListeners() {
     .getElementById("searchCat")
     ?.addEventListener("input", filterCategories);
 
-  //^ Edit & delete product
   document
     .querySelector("#categoriesTableContainer")
     .addEventListener("click", function (e) {
-      // const editBtn = e.target.closest(".edit-btn");
-      // // debugger;
-      // if (editBtn) {
-      //   const id = editBtn.dataset.id;
-      //   handleProduct_Edit_Add(id);
-      // }
-
-      //& delete
+      //^ Edit & delete product
+      const editBtn = e.target.closest(".edit-btn");
       const deleteBtn = e.target.closest(".delete-btn");
-      if (deleteBtn) {
+      if (editBtn) {
+        const id = editBtn.dataset.id;
+        handleEdit(id);
+      } else if (deleteBtn) {
         const id = deleteBtn.dataset.id;
         handleDelete(id);
       }
@@ -101,6 +95,12 @@ function setupEventListeners() {
           getTableHtml(lastFiltered);
         return;
       }
+    });
+
+  //& Limit
+  document
+    .querySelector("#categoriesTableContainer")
+    .addEventListener("change", (e) => {
       const pageSizeSelect = e.target.closest(".page-size-select");
       if (pageSizeSelect) {
         PAGE_SIZE = Number(pageSizeSelect.value);
@@ -110,28 +110,14 @@ function setupEventListeners() {
         return;
       }
     });
+
+  //& Add product
+  document
+    .querySelector("#addCategoryBtn")
+    .addEventListener("click", function () {
+      handleAdd();
+    });
 }
-
-async function handleDelete(id) {
-  let c = categories.find((e) => e.id == id);
-  if (!c) return;
-
-  let productsCount = products.filter((p) => p.categoryId == id).length;
-  if (productsCount > 0) {
-    alert("You can't delete this category because it has products.");
-    return;
-  }
-
-  let ok = confirm(`Delete category "${c.name}"?`);
-  if (!ok) return;
-
-  await deleteData("categories", id);
-  await loadData();
-  lastFiltered = [...categories];
-  currentPage = 1;
-  filterCategories();
-}
-
 
 //* search
 function filterCategories() {
@@ -173,15 +159,13 @@ function getProductsNumber(id) {
   return `<span class="badge rounded-pill px-2" style="background:#eff6ff; color:#3b82f6;">${count}</span>`;
 }
 
-
-
 //* add button
-function handleAdd(id=''){
-  getModal('categories', 'Add',id);
-} 
+function handleAdd(id = "") {
+  getModal("categories", "Add", id);
+}
 //* edit button
-function handleEdit(id){
-  getModal('categories','Edit',id);
+function handleEdit(id) {
+  getModal("categories", "Edit", id);
 }
 //* delete button
 async function handleDelete(id) {
@@ -199,5 +183,7 @@ async function handleDelete(id) {
 
   await deleteData("categories", id);
   await loadData();
+  lastFiltered = [...categories];
+  currentPage = 1;
   filterCategories();
 }
