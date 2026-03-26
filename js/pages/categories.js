@@ -1,12 +1,9 @@
 import renderTable from "../components/table.js";
 import {
   fetchData,
-  postData,
-  updateData,
   deleteData,
 } from "../services/api.js";
-import renderPagination, { paginateData } from "../components/pagination.js";
-
+import { getModal } from "../components/modal.js";
 let products = [];
 let categories = [];
 let suppliers = [];
@@ -135,6 +132,7 @@ async function handleDelete(id) {
   filterCategories();
 }
 
+
 //* search
 function filterCategories() {
   let searchTerm = document.getElementById("searchCat").value.toLowerCase();
@@ -173,4 +171,33 @@ function updateStats(count, searchTerm) {
 function getProductsNumber(id) {
   let count = products.filter((p) => p.categoryId == id).length;
   return `<span class="badge rounded-pill px-2" style="background:#eff6ff; color:#3b82f6;">${count}</span>`;
+}
+
+
+
+//* add button
+function handleAdd(id=''){
+  getModal('categories', 'Add',id);
+} 
+//* edit button
+function handleEdit(id){
+  getModal('categories','Edit',id);
+}
+//* delete button
+async function handleDelete(id) {
+  let c = categories.find((e) => e.id == id);
+  if (!c) return;
+
+  let productsCount = products.filter((p) => p.categoryId == id).length;
+  if (productsCount > 0) {
+    alert("You can't delete this category because it has products.");
+    return;
+  }
+
+  let ok = confirm(`Delete category "${c.name}"?`);
+  if (!ok) return;
+
+  await deleteData("categories", id);
+  await loadData();
+  filterCategories();
 }

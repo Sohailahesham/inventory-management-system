@@ -2,16 +2,10 @@ import renderTable from "../components/table.js";
 import renderPagination, { paginateData } from "../components/pagination.js";
 import {
   fetchData,
-  postData,
   updateData,
+  postData,
   deleteData,
 } from "../services/api.js";
-import showModal from "../components/modal.js";
-import renderForm, {
-  getFormData,
-  showError,
-  clearErrors,
-} from "../components/form.js";
 
 let products = [];
 let categories = [];
@@ -173,8 +167,8 @@ async function handleDelete(id) {
 
   await deleteData("products", id);
   await loadData();
-  lastFiltered = [...products];
-  currentPage = 1;
+
+  // keep current filters/search
   filterProducts();
 }
 
@@ -262,33 +256,33 @@ function handleProduct_Edit_Add(id = "") {
 }
 
 //* Display modal with form for product
-async function displayProductForm(id) {
+async function displayProductForm(id){
   //^ if user click edit button then i must select which product he clicked
-  let product = "";
-  if (id) {
-    product = await fetchData(`products/${id}`);
+  let product='';
+  if(id){
+    product =  await fetchData(`products/${id}`);
   }
   //^ remove if there is another modal was shown
   document.querySelector("#productModal")?.remove();
   //^ make html code for modal contain form if edit then data will be exist in inputs if add then won't be data exist in inputs
-  const html = `
+  const html=`
   <div class="modal fade" id="productModal" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4>${id ? "Edit" : "Add"} Product</h4>
+          <h4>${id?'Edit':'Add'} Product</h4>
         </div>
         <div class="modal-body">
           <form id='productForm'>
             <div class="row mb-3">
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="name">Product Name *</label>
-                <input type="text" class="form-control" name="name" placeholder="e.g Laptop Pro" value= "${id ? product.name : ""}" >
+                <input type="text" class="form-control" name="name" placeholder="e.g Laptop Pro" value= "${id?product.name:''}" >
                 <div class="text-danger fw-bold errorMes errorMes-name"></div>
               </div>
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="sku">SKU *</label>
-                <input type="text" class="form-control" name='sku'  placeholder="e.g LP-001" value="${id ? product.sku : ""}">
+                <input type="text" class="form-control" name='sku'  placeholder="e.g LP-001" value="${id?product.sku:''}">
                 <div class="text-danger fw-bold errorMes errorMes-sku"></div>
               </div>
             </div>
@@ -296,33 +290,35 @@ async function displayProductForm(id) {
             <div class="row mb-3">
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="categoryId">Category *</label>
-                ${displayOptions("category", product.categoryId, categories)}
+                ${displayOptions('category',product.categoryId,categories)}
               </div>
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="supplierId">Supplier *</label>
-                ${displayOptions("supplier", product.supplierId, suppliers)}
+                ${displayOptions('supplier',product.supplierId,suppliers)}
               </div>
             </div>
+
 
             <div class="row mb-3">
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="price">Pice (EGP) *</label>
-                <input type="number" class="form-control" name="price" placeholder="0.00" value= "${id ? product.price : ""}" >
+                <input type="number" class="form-control" name="price" placeholder="0.00" value= "${id?product.price:''}" >
                 <div class="text-danger fw-bold errorMes errorMes-price"></div>
 
               </div>
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="quantity">Quantity *</label>
-                <input type="number" class="form-control" name='quantity'  placeholder="0" value="${id ? product.quantity : ""}">
+                <input type="number" class="form-control" name='quantity'  placeholder="0" value="${id?product.quantity:''}">
                 <div class="text-danger fw-bold errorMes errorMes-quantity"></div>
 
               </div>
             </div>
 
+
             <div class="row mb-3">
               <div class="col-6">
                 <label class="text-secondary" class="form-label" for="reorderLevel">Reorder Level *</label>
-                <input type="number" class="form-control" name="reorderLevel" placeholder="5" value= "${id ? product.reorderLevel : ""}" >
+                <input type="number" class="form-control" name="reorderLevel" placeholder="5" value= "${id?product.reorderLevel:''}" >
                 <div class="text-danger fw-bold errorMes errorMes-reorderLevel"></div>
 
               </div>
@@ -344,29 +340,26 @@ async function displayProductForm(id) {
   </div>
   `;
   //^ show modal
-  document.body.insertAdjacentHTML("beforeend", html);
+  document.body.insertAdjacentHTML('beforeend',html);
   const modal = new bootstrap.Modal(document.querySelector("#productModal"));
   modal.show();
   // event
-  document
-    .querySelector(".save-btn")
-    .addEventListener("click", async function (e) {
+  document.querySelector('.save-btn').addEventListener('click',async function(e){
       const form = document.querySelector("#productForm");
       let data = Object.fromEntries(new FormData(form));
-      if (isVaildProductData(data, id)) {
-        if (id) {
-          //edit
-          products = await updateData("products", id, data);
-        } else {
-          //add
-          products = await postData("products", data);
+    if(isVaildProductData(data,id)){
+      if(id){//edit
+        products=await updateData('products',id,data);
+      }
+      else{//add
+        products=await postData('products',data);
         }
         await loadData();
         renderProducts();
       }
     });
   // cancel
-  document.querySelector(".close-btn").addEventListener("click", function () {
+  document.querySelector(".close-btn").addEventListener('click', function() {
     if (confirm("Are you sure you want to discard changes?")) {
       const modalElement = document.querySelector("#productModal");
       const modalInstance = bootstrap.Modal.getInstance(modalElement);
@@ -386,9 +379,6 @@ function displayOptions(type, id, data) {
   return selectInput;
 }
 
-
-
-//* Product Form Validation
 function isVaildProductData(data, id) {
   //^ remove all old error messages
   document
@@ -404,28 +394,29 @@ function isVaildProductData(data, id) {
 }
 function isVaildName(name) {
   if (name.length === 0) {
-    document.querySelector(".error-name").innerHTML =
+    document.querySelector(".errorMes-name").innerHTML =
       `Product Name is required`;
     return false;
   }
   if (name.length <= 3 || name.length > 25) {
-    document.querySelector(".error-name").innerHTML =
+    document.querySelector(".errorMes-name").innerHTML =
       `Product Name should be bigger than 3 charchter and less than 25`;
     return false;
   }
   return true;
 }
 function isVaildSku(sku, id) {
-  // debugger; //?? What is this?
+  debugger;
   //^ if empty
   if (sku.length === 0) {
-    document.querySelector(".error-sku").innerHTML = `Product SKU is required`;
+    document.querySelector(".errorMes-sku").innerHTML =
+      `Product SKU is required`;
     return false;
   }
   //^ if not vaild format LETTERS-3Digit of number> ABC-123
   const skuRegex = /^[A-Z]+-\d{3}$/;
   if (!skuRegex.test(sku)) {
-    document.querySelector(".error-sku").innerHTML =
+    document.querySelector(".errorMes-sku").innerHTML =
       "Invalid SKU format. Please use 'LETTERS-000'.";
     return false;
   }
@@ -434,13 +425,13 @@ function isVaildSku(sku, id) {
 }
 function isVaildNumber(num, type) {
   if (num.length === 0) {
-    document.querySelector(`.error-${type}`).innerHTML =
+    document.querySelector(`.errorMes-${type}`).innerHTML =
       `Product ${type} is required`;
     return false;
   }
   num = Number(num);
-  if (num < 0) {
-    document.querySelector(`.error-${type}`).innerHTML =
+  if (num <= 0) {
+    document.querySelector(`.errorMes-${type}`).innerHTML =
       `Product ${type} should be bigger than zero`;
     return false;
   }
@@ -448,14 +439,14 @@ function isVaildNumber(num, type) {
 }
 function isVaildUnit(unit) {
   if (unit.length === 0) {
-    document.querySelector(`.error-unit`).innerHTML =
+    document.querySelector(`.errorMes-unit`).innerHTML =
       `Product unit is required`;
     return false;
   }
   let units = ["pcs", "kg", "box"];
   unit = unit.toLowerCase();
   if (!units.includes(unit)) {
-    document.querySelector(`.error-unit`).innerHTML =
+    document.querySelector(`.errorMes-unit`).innerHTML =
       `Product unit should be pcs or kg or box`;
     return false;
   }

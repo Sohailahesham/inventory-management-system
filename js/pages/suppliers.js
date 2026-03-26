@@ -1,12 +1,8 @@
 import renderTable from "../components/table.js";
 import {
   fetchData,
-  postData,
-  updateData,
   deleteData,
 } from "../services/api.js";
-
-import renderPagination, { paginateData } from "../components/pagination.js";
 
 let products = [];
 let categories = [];
@@ -85,45 +81,10 @@ function setupEventListeners() {
   document
     .getElementById("searchSup")
     ?.addEventListener("input", filterSuppliers);
+}
 
-  //^ Edit & delete product
-  document
-    .querySelector("#suppliersTableContainer")
-    .addEventListener("click", function (e) {
-      // const editBtn = e.target.closest(".edit-btn");
-      // // debugger;
-      // if (editBtn) {
-      //   const id = editBtn.dataset.id;
-      //   handleProduct_Edit_Add(id);
-      // }
-
-      //& delete
-      const deleteBtn = e.target.closest(".delete-btn");
-      if (deleteBtn) {
-        const id = deleteBtn.dataset.id;
-        handleDelete(id);
-      }
-
-      //& pagination
-      const pageBtn = e.target.closest(".page-link");
-      if (pageBtn) {
-        const page = Number(pageBtn.dataset.page);
-        const totalPages = Math.ceil(lastFiltered.length / PAGE_SIZE);
-        if (page < 1 || page > totalPages) return;
-        currentPage = page;
-        document.getElementById("suppliersTableContainer").innerHTML =
-          getTableHtml(lastFiltered);
-        return;
-      }
-      const pageSizeSelect = e.target.closest(".page-size-select");
-      if (pageSizeSelect) {
-        PAGE_SIZE = Number(pageSizeSelect.value);
-        currentPage = 1;
-        document.getElementById("suppliersTableContainer").innerHTML =
-          getTableHtml(lastFiltered);
-        return;
-      }
-    });
+function exposeTableHandlers() {
+  window.handleDelete = handleDelete;
 }
 
 async function handleDelete(id) {
