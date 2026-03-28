@@ -1,5 +1,6 @@
 import { fetchData } from "../services/api.js";
 import renderPagination, { paginateData } from "../components/pagination.js";
+import { activityRowHtml } from "../utils/helpers.js";
 
 let activities = [];
 let lastFiltered = [];
@@ -20,61 +21,10 @@ async function loadData() {
   activities.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 }
 
-//* decide color and label based on action type
-function getActionStyle(action) {
-  if (action.includes("STOCK_ADJUSTMENT"))
-    return { color: "warning", label: "adjust" };
-  if (action.includes("RECEIVE_ORDER"))
-    return { color: "primary", label: "order" };
-  if (action.includes("CREATE_PURCHASE_ORDER"))
-    return { color: "primary", label: "order" };
-  if (action.includes("CREATE_PRODUCT"))
-    return { color: "success", label: "add" };
-  if (action.includes("UPDATE_PRODUCT"))
-    return { color: "success", label: "update" };
-  if (action.includes("LOW_STOCK_ALERT"))
-    return { color: "danger", label: "alert" };
-  return { color: "secondary", label: "info" };
-}
-
-//* With Time make format From "2025-03-14T10:00:00Z" Which exist in our json file  →  "2025-03-14 10:00" To this nice and readable format
-function formatDate(timestamp) {
-  const date = new Date(timestamp);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  return `${year}-${month}-${day} ${hours}:${minutes}`;
-}
-
-//* build one activity row
-function renderActivityRow(activity) {
-  const { color, label } = getActionStyle(activity.action);
-  const date = formatDate(activity.timestamp);
-  return `
-    <div class="d-flex align-items-center justify-content-between py-3 border-bottom">
-      <div class="d-flex align-items-start gap-3">
-        <span class="mt-1 rounded-circle bg-${color}" 
-          style="width:10px;height:10px;min-width:10px;display:inline-block;">
-        </span>
-        <div>
-          <div class="fw-medium">${activity.details}</div>
-          <small class="text-muted">${date}</small>
-        </div>
-      </div>
-      <span class="badge rounded-pill bg-${color} bg-opacity-25 
-        text-${color} ms-3 text-capitalize fw-normal px-3">
-        ${label}
-      </span>
-    </div>
-  `;
-}
-
 //* build the rows section with pagination applied
 function getActivityListHtml(data = lastFiltered) {
   const paginated = paginateData(data, currentPage, PAGE_SIZE);
-  const rows = paginated.map(renderActivityRow).join("");
+  const rows = paginated.map(activityRowHtml).join("");
   const list = rows
     ? rows
     : '<p class="text-muted text-center py-3">No activity found.</p>';
@@ -95,7 +45,7 @@ function renderActivities() {
       <i class="bi bi-search text-muted"></i>
       <input type="text" id="searchActivity" placeholder="Search activity..."
         class="form-control form-control-sm border-0 shadow-none">
-      <select id="typeFilter" class="form-select form-select-sm border-0 shadow-none" style="width:160px;">
+      <select id="typeFilter" class="form-select form-select-sm border-0 shadow-none form-select-activity-type">
         <option value="">All Types</option>
         <option value="STOCK_ADJUSTMENT">Adjustments</option>
         <option value="RECEIVE_ORDER">Orders Received</option>

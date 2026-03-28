@@ -4,6 +4,7 @@ import { loadSuppliers } from "./pages/suppliers.js";
 import { loadReports } from "./pages/reports.js";
 import { loadOrders } from "./pages/orders.js";
 import { loadActivityLog } from "./pages/activity.js";
+import { loadDashboard } from "./pages/dashboard.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   const savedPage = localStorage.getItem("currentPage") || "Products";
@@ -32,6 +33,9 @@ function navigateTo(text) {
   localStorage.setItem("currentPage", text);
 
   switch (text) {
+    case "Dashboard":
+      loadDashboard();
+      break;
     case "Products":
       loadProducts();
       break;
