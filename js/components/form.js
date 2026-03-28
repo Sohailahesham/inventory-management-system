@@ -199,3 +199,74 @@ export async function makeOrderForm() {
     </form>
   `;
 }
+
+const STOCK_ADJUSTMENT_REASONS = [
+  "Damaged goods",
+  "Theft/Loss",
+  "Stock count correction",
+  "Return from customer",
+  "Manual entry",
+  "Inventory count adjustment",
+];
+
+function escAttr(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;");
+}
+
+export async function makeStockAdjustmentForm() {
+  const products = await fetchData("products");
+  const productOptions = products
+    .map((p) => {
+      const qty = Number(p.quantity) || 0;
+      const unit = escAttr(p.unit || "");
+      const reorder = p.reorderLevel !== undefined && p.reorderLevel !== ""
+        ? escAttr(String(p.reorderLevel))
+        : "";
+      return `<option value="${p.id}" data-qty="${qty}" data-unit="${unit}" data-reorder="${reorder}">${p.name} (Qty: ${qty})</option>`;
+    })
+    .join("");
+
+  const reasonOptions = STOCK_ADJUSTMENT_REASONS.map(
+    (r) => `<option value="${escAttr(r)}">${r}</option>`,
+  ).join("");
+
+  return `
+    <form id="stockAdjustmentForm">
+      <div class="mb-3">
+        <label class="text-secondary form-label" for="productId">Product *</label>
+        <select name="productId" id="stockAdjProductSelect" class="form-select">
+          <option value="">Select product</option>
+          ${productOptions}
+        </select>
+        <div class="text-danger fw-bold errorMes errorMes-productId"></div>
+      </div>
+      <div id="adjCurrentStock" class="adjustment-current-stock d-none small mb-3"></div>
+      <div class="row mb-3">
+        <div class="col-6">
+          <label class="text-secondary form-label" for="type">Type *</label>
+          <select name="type" id="stockAdjTypeSelect" class="form-select">
+            <option value="increase">Add stock (+)</option>
+            <option value="decrease">Remove stock (−)</option>
+          </select>
+          <div class="text-danger fw-bold errorMes errorMes-type"></div>
+        </div>
+        <div class="col-6">
+          <label class="text-secondary form-label" for="quantity">Quantity *</label>
+          <input type="number" name="quantity" id="stockAdjQtyInput" class="form-control" min="1" placeholder="0">
+          <div class="text-danger fw-bold errorMes errorMes-quantity"></div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="text-secondary form-label" for="reason">Reason *</label>
+        <select name="reason" id="stockAdjReasonSelect" class="form-select">
+          <option value="">Select reason</option>
+          ${reasonOptions}
+        </select>
+        <div class="text-danger fw-bold errorMes errorMes-reason"></div>
+      </div>
+    </form>
+  `;
+}

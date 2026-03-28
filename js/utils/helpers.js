@@ -183,6 +183,67 @@ function isVaildItems(items) {
   return true;
 }
 
+//* Validation — stock adjustments
+export function isVaildStockAdjustmentData(data, products) {
+  document.querySelectorAll(".errorMes").forEach((item) => (item.innerHTML = ""));
+
+  const v1 = isVaildAdjustmentProductId(data.productId);
+  const v2 = isVaildAdjustmentType(data.type);
+  const v3 = isVaildAdjustmentReason(data.reason);
+  const v4 = isVaildAdjustmentQuantity(data.quantity, data.type, data.productId, products);
+  return v1 && v2 && v3 && v4;
+}
+
+function isVaildAdjustmentProductId(productId) {
+  if (!productId || String(productId).trim() === "") {
+    document.querySelector(".errorMes-productId").innerHTML = "Product is required";
+    return false;
+  }
+  return true;
+}
+
+function isVaildAdjustmentType(type) {
+  if (type !== "increase" && type !== "decrease") {
+    document.querySelector(".errorMes-type").innerHTML = "Select a valid adjustment type";
+    return false;
+  }
+  return true;
+}
+
+function isVaildAdjustmentReason(reason) {
+  if (!reason || String(reason).trim() === "") {
+    document.querySelector(".errorMes-reason").innerHTML = "Reason is required";
+    return false;
+  }
+  return true;
+}
+
+function isVaildAdjustmentQuantity(quantityStr, type, productId, products) {
+  if (quantityStr === undefined || quantityStr === null || String(quantityStr).trim() === "") {
+    document.querySelector(".errorMes-quantity").innerHTML = "Quantity is required";
+    return false;
+  }
+  const num = parseInt(String(quantityStr), 10);
+  if (Number.isNaN(num) || num <= 0) {
+    document.querySelector(".errorMes-quantity").innerHTML = "Quantity must be greater than 0";
+    return false;
+  }
+  if (type === "decrease" && Array.isArray(products)) {
+    const product = products.find((p) => p.id == productId);
+    if (!product) {
+      document.querySelector(".errorMes-quantity").innerHTML = "Product not found";
+      return false;
+    }
+    const oldQty = Number(product.quantity) || 0;
+    if (oldQty - num < 0) {
+      document.querySelector(".errorMes-quantity").innerHTML =
+        "Cannot reduce below 0. Current stock: " + oldQty + ".";
+      return false;
+    }
+  }
+  return true;
+}
+
 //* Dashboard & Reports — shared inventory helpers
 export function formatEGP(amount) {
   let num = Number(amount || 0);
