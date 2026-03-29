@@ -1,10 +1,11 @@
 import renderTable from "../components/table.js";
-import { fetchData, deleteData } from "../services/api.js";
+import { fetchData, deleteData, postData } from "../services/api.js"; // ✅ ADDED: postData for activity log
 import { getModal } from "../components/modal.js";
 import renderPagination, { paginateData } from "../components/pagination.js";
+import { GetCurrentDate } from "../utils/helpers.js"; // ✅ ADDED: for activity log timestamp
+
 let products = [];
 let categories = [];
-let suppliers = [];
 let lastFiltered = [];
 let currentPage = 1;
 let PAGE_SIZE = 5;
@@ -18,11 +19,9 @@ export async function loadCategories() {
 async function loadData() {
   products = await fetchData("products");
   categories = await fetchData("categories");
-  suppliers = await fetchData("suppliers");
   lastFiltered = [...categories];
 }
 
-//* render the whole html of Categories page
 function renderCategories() {
   let html = `
     <div class="d-flex gap-2 mb-3 align-items-center p-3 bg-white rounded border">
@@ -33,20 +32,14 @@ function renderCategories() {
         <i class="bi bi-plus-lg"></i> Add Category
       </button>
     </div>
-    
-    <!-- Search Stats -->
     <div id="searchStats" class="mb-2 small text-muted"></div>
-    
-    <!-- Categories Table -->
     <div id="categoriesTableContainer">
       ${getTableHtml()}
     </div>
   `;
-
   document.getElementById("pageContent").innerHTML = html;
 }
 
-//* to bring the table whatever there is a filter/ search/ all cats
 function getTableHtml(filteredCategories = categories) {
   const paginated = paginateData(filteredCategories, currentPage, PAGE_SIZE);
   let tableData = paginated.map((c) => ({
@@ -55,103 +48,64 @@ function getTableHtml(filteredCategories = categories) {
     description: c.description || "-",
     products: getProductsNumber(c.id),
   }));
-
   let columns = ["name", "description", "products"];
-
   return (
     renderTable(tableData, columns)
     + renderPagination(filteredCategories.length, currentPage, PAGE_SIZE)
   );
 }
 
-//* for all event listeners
 function setupEventListeners() {
-  document
-    .getElementById("searchCat")
-    ?.addEventListener("input", filterCategories);
+  document.getElementById("searchCat")?.addEventListener("input", filterCategories);
 
-  document
-    .querySelector("#categoriesTableContainer")
-    .addEventListener("click", function (e) {
-      //^ Edit & delete product
-      const editBtn = e.target.closest(".edit-btn");
-      const deleteBtn = e.target.closest(".delete-btn");
-      if (editBtn) {
-        const id = editBtn.dataset.id;
-        handleEdit(id);
-      } else if (deleteBtn) {
-        const id = deleteBtn.dataset.id;
-        handleDelete(id);
-      }
+  document.querySelector("#categoriesTableContainer").addEventListener("click", function (e) {
+    const editBtn = e.target.closest(".edit-btn");
+    const deleteBtn = e.target.closest(".delete-btn");
+    if (editBtn) handleEdit(editBtn.dataset.id);
+    else if (deleteBtn) handleDelete(deleteBtn.dataset.id);
 
-      //& pagination
-      const pageBtn = e.target.closest(".page-link");
-      if (pageBtn) {
-        const page = Number(pageBtn.dataset.page);
-        const totalPages = Math.ceil(lastFiltered.length / PAGE_SIZE);
-        if (page < 1 || page > totalPages) return;
-        currentPage = page;
-        document.getElementById("categoriesTableContainer").innerHTML =
-          getTableHtml(lastFiltered);
-        return;
-      }
-    });
+    const pageBtn = e.target.closest(".page-link");
+    if (pageBtn) {
+      const page = Number(pageBtn.dataset.page);
+      const totalPages = Math.ceil(lastFiltered.length / PAGE_SIZE);
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      document.getElementById("categoriesTableContainer").innerHTML = getTableHtml(lastFiltered);
+    }
+  });
 
-  //& Limit
-  document
-    .querySelector("#categoriesTableContainer")
-    .addEventListener("change", (e) => {
-      const pageSizeSelect = e.target.closest(".page-size-select");
-      if (pageSizeSelect) {
-        PAGE_SIZE = Number(pageSizeSelect.value);
-        currentPage = 1;
-        document.getElementById("categoriesTableContainer").innerHTML =
-          getTableHtml(lastFiltered);
-        return;
-      }
-    });
+  document.querySelector("#categoriesTableContainer").addEventListener("change", (e) => {
+    const pageSizeSelect = e.target.closest(".page-size-select");
+    if (pageSizeSelect) {
+      PAGE_SIZE = Number(pageSizeSelect.value);
+      currentPage = 1;
+      document.getElementById("categoriesTableContainer").innerHTML = getTableHtml(lastFiltered);
+    }
+  });
 
-  //& Add Category
-  document
-    .querySelector("#addCategoryBtn")
-    .addEventListener("click", function () {
-      handleAdd();
-    });
+  document.querySelector("#addCategoryBtn").addEventListener("click", () => handleAdd());
 }
 
-//* search
 function filterCategories() {
   let searchTerm = document.getElementById("searchCat").value.toLowerCase();
-
-  //^ Search by name
   let filtered = categories.filter((c) => {
     return (
       c.name.toLowerCase().includes(searchTerm)
       || (c.description && c.description.toLowerCase().includes(searchTerm))
     );
   });
-
   lastFiltered = filtered;
   currentPage = 1;
-
-  //& Change Table data
-  document.getElementById("categoriesTableContainer").innerHTML =
-    getTableHtml(filtered);
-
-  //& update status
+  document.getElementById("categoriesTableContainer").innerHTML = getTableHtml(filtered);
   updateStats(filtered.length, searchTerm);
 }
 
-//* stats
 function updateStats(count, searchTerm) {
   let statsDiv = document.getElementById("searchStats");
   if (!statsDiv) return;
-
-  if (searchTerm) {
-    statsDiv.innerHTML = `Found ${count} categor${count !== 1 ? "ies" : "y"} matching "${searchTerm}"`;
-  } else {
-    statsDiv.innerHTML = "";
-  }
+  statsDiv.innerHTML = searchTerm
+    ? `Found ${count} categor${count !== 1 ? "ies" : "y"} matching "${searchTerm}"`
+    : "";
 }
 
 function getProductsNumber(id) {
@@ -159,15 +113,20 @@ function getProductsNumber(id) {
   return `<span class="badge rounded-pill px-2" style="background:#eff6ff; color:#3b82f6;">${count}</span>`;
 }
 
-//* add button
-function handleAdd(id = "") {
-  getModal("categories", "Add", id);
+function handleAdd() {
+  getModal("categories", "Add", "", async () => {
+    await loadData();
+    filterCategories();
+  });
 }
-//* edit button
+
 function handleEdit(id) {
-  getModal("categories", "Edit", id);
+  getModal("categories", "Edit", id, async () => {
+    await loadData();
+    filterCategories();
+  });
 }
-//* delete button
+
 async function handleDelete(id) {
   let c = categories.find((e) => e.id == id);
   if (!c) return;
@@ -182,6 +141,14 @@ async function handleDelete(id) {
   if (!ok) return;
 
   await deleteData("categories", id);
+
+  await postData("activityLog", {
+    action: "DELETE_CATEGORY",
+    details: `Category deleted: ${c.name}`,
+    user: "admin",
+    timestamp: GetCurrentDate(),
+  });
+
   await loadData();
   lastFiltered = [...categories];
   currentPage = 1;

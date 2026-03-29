@@ -1,8 +1,6 @@
 //* Validation Functions for Products 
 export function isVaildProductData(data, id) {
-  //^ remove all old error messages
   document.querySelectorAll('.errorMes').forEach(item => item.innerHTML = '');
-
   const v1 = isVaildName(data.name);
   const v2 = isVaildSku(data.sku, id);
   const v3 = isVaildNumber(data.price, 'price');
@@ -23,12 +21,10 @@ function isVaildName(name) {
   return true;
 }
 function isVaildSku(sku) {
-  //^ if empty
   if (sku.length === 0) {
     document.querySelector('.errorMes-sku').innerHTML = `Product SKU is required`;
     return false;
   }
-  //^ if not vaild format LETTERS-3Digit of number> ABC-123
   const skuRegex = /^[A-Z]+-\d{3}$/;
   if (!skuRegex.test(sku)) {
     document.querySelector('.errorMes-sku').innerHTML = "Invalid SKU format. Please use 'LETTERS-000'.";
@@ -64,9 +60,7 @@ function isVaildUnit(unit) {
 
 //* Validation Functions for categories
 export function isVaildCategoryData(data) {
-  //^ remove all old error messages
   document.querySelectorAll('.errorMes').forEach(item => item.innerHTML = '');
-
   const v1 = isVaildName(data.name);
   const v2 = isVaildDescription(data.description);
   return v1 && v2;
@@ -85,9 +79,7 @@ function isVaildDescription(description) {
 
 //* Validation Functions for suppliers
 export function isVaildSupplierData(data) {
-  //^ remove all old error messages
   document.querySelectorAll('.errorMes').forEach(item => item.innerHTML = '');
-
   const v1 = isVaildName(data.name);
   const v2 = isVaildContact(data.contact, data);
   const v3 = isValidEmail(data.email);
@@ -110,13 +102,11 @@ function isVaildContact(fullName, data) {
     document.querySelector('.errorMes-contact').innerHTML = `each word in full name must include only letters`;
     return false;
   }
-  //^ convert input to make first letter in each word capital
   fullName[0] = fullName[0][0].toUpperCase() + fullName[0].slice(1);
   fullName[1] = fullName[1][0].toUpperCase() + fullName[1].slice(1);
   data.contact = fullName.join(' ');
   return true;
 }
-
 function isValidEmail(email) {
   if (email.length === 0) {
     document.querySelector('.errorMes-email').innerHTML = `Email is required`;
@@ -128,7 +118,7 @@ function isValidEmail(email) {
     return false;
   }
   return true;
-};
+}
 function isValidPhone(phone) {
   phone = phone.trim();
   if (phone.length === 0) {
@@ -141,7 +131,7 @@ function isValidPhone(phone) {
     return false;
   }
   return true;
-};
+}
 function isVaildAddress(address) {
   address = address.trim();
   if (address.length === 0) {
@@ -155,18 +145,13 @@ function isVaildAddress(address) {
   return true;
 }
 
-
-
-//* Validation Functions for purchase orders
 //* Validation Functions for orders
 export function isVaildOrderData(data) {
   document.querySelectorAll('.errorMes').forEach(item => item.innerHTML = '');
-
   const v1 = isVaildSupplier(data.supplierId);
   const v2 = isVaildItems(data.items);
   return v1 && v2;
 }
-
 function isVaildSupplier(supplierId) {
   if (!supplierId || supplierId === "") {
     document.querySelector('.errorMes-supplierId').innerHTML = `Supplier is required`;
@@ -174,7 +159,6 @@ function isVaildSupplier(supplierId) {
   }
   return true;
 }
-
 function isVaildItems(items) {
   if (!items || items.length === 0) {
     document.querySelector('.errorMes-items').innerHTML = `Please add at least one item`;
@@ -186,14 +170,12 @@ function isVaildItems(items) {
 //* Validation — stock adjustments
 export function isVaildStockAdjustmentData(data, products) {
   document.querySelectorAll(".errorMes").forEach((item) => (item.innerHTML = ""));
-
   const v1 = isVaildAdjustmentProductId(data.productId);
   const v2 = isVaildAdjustmentType(data.type);
   const v3 = isVaildAdjustmentReason(data.reason);
   const v4 = isVaildAdjustmentQuantity(data.quantity, data.type, data.productId, products);
   return v1 && v2 && v3 && v4;
 }
-
 function isVaildAdjustmentProductId(productId) {
   if (!productId || String(productId).trim() === "") {
     document.querySelector(".errorMes-productId").innerHTML = "Product is required";
@@ -201,7 +183,6 @@ function isVaildAdjustmentProductId(productId) {
   }
   return true;
 }
-
 function isVaildAdjustmentType(type) {
   if (type !== "increase" && type !== "decrease") {
     document.querySelector(".errorMes-type").innerHTML = "Select a valid adjustment type";
@@ -209,7 +190,6 @@ function isVaildAdjustmentType(type) {
   }
   return true;
 }
-
 function isVaildAdjustmentReason(reason) {
   if (!reason || String(reason).trim() === "") {
     document.querySelector(".errorMes-reason").innerHTML = "Reason is required";
@@ -217,7 +197,6 @@ function isVaildAdjustmentReason(reason) {
   }
   return true;
 }
-
 function isVaildAdjustmentQuantity(quantityStr, type, productId, products) {
   if (quantityStr === undefined || quantityStr === null || String(quantityStr).trim() === "") {
     document.querySelector(".errorMes-quantity").innerHTML = "Quantity is required";
@@ -249,33 +228,24 @@ export function formatEGP(amount) {
   let num = Number(amount || 0);
   return `${num.toLocaleString("en-US")} EGP`;
 }
-
 export function getLowStockProducts(products) {
   if (!Array.isArray(products)) return [];
   return products
     .filter((p) => Number(p.quantity) <= Number(p.reorderLevel))
     .sort((a, b) => Number(a.quantity) - Number(b.quantity));
 }
-
 export function getInventoryValueRowsSorted(products, limit) {
   const rows = [];
   if (!Array.isArray(products)) return rows;
   for (let i = 0; i < products.length; i++) {
     let p = products[i];
     let value = Number(p.price) * Number(p.quantity);
-    rows.push({
-      id: p.id,
-      name: p.name,
-      value: value,
-    });
+    rows.push({ id: p.id, name: p.name, value: value });
   }
   rows.sort((a, b) => b.value - a.value);
-  if (typeof limit === "number") {
-    return rows.slice(0, limit);
-  }
+  if (typeof limit === "number") return rows.slice(0, limit);
   return rows;
 }
-
 export function getTotalInventoryValue(products) {
   let total = 0;
   if (!Array.isArray(products)) return total;
@@ -285,7 +255,6 @@ export function getTotalInventoryValue(products) {
   }
   return total;
 }
-
 export function getPendingOrdersCount(orders) {
   let n = 0;
   for (let i = 0; i < orders.length; i++) {
@@ -296,21 +265,17 @@ export function getPendingOrdersCount(orders) {
 
 //* Activity log — shared with Activity page and Dashboard
 export function getActionStyle(action) {
-  if (action.includes("STOCK_ADJUSTMENT"))
-    return { color: "warning", label: "adjust" };
-  if (action.includes("RECEIVE_ORDER"))
-    return { color: "primary", label: "order" };
-  if (action.includes("CREATE_PURCHASE_ORDER"))
-    return { color: "primary", label: "order" };
-  if (action.includes("CREATE_PRODUCT"))
-    return { color: "success", label: "add" };
-  if (action.includes("UPDATE_PRODUCT"))
-    return { color: "success", label: "update" };
-  if (action.includes("LOW_STOCK_ALERT"))
-    return { color: "danger", label: "alert" };
+  if (action.includes("STOCK_ADJUSTMENT")) return { color: "warning", label: "adjust" };
+  if (action.includes("RECEIVE_ORDER")) return { color: "primary", label: "order" };
+  if (action.includes("CREATE_PURCHASE_ORDER")) return { color: "primary", label: "order" };
+  if (action.includes("CREATE_PRODUCT")) return { color: "success", label: "add" };
+  if (action.includes("UPDATE_PRODUCT")) return { color: "success", label: "update" };
+  if (action.includes("DELETE_PRODUCT")) return { color: "danger", label: "delete" };    // ✅ ADDED: delete product action style
+  if (action.includes("DELETE_CATEGORY")) return { color: "danger", label: "delete" };   // ✅ ADDED: delete category action style
+  if (action.includes("DELETE_SUPPLIER")) return { color: "danger", label: "delete" };   // ✅ ADDED: delete supplier action style
+  if (action.includes("LOW_STOCK_ALERT")) return { color: "danger", label: "alert" };
   return { color: "secondary", label: "info" };
 }
-
 export function formatActivityTimestamp(timestamp) {
   const date = new Date(timestamp);
   const year = date.getFullYear();
@@ -320,7 +285,6 @@ export function formatActivityTimestamp(timestamp) {
   const minutes = String(date.getMinutes()).padStart(2, "0");
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
-
 export function activityRowHtml(activity) {
   const { color, label } = getActionStyle(activity.action);
   const date = formatActivityTimestamp(activity.timestamp);
@@ -339,4 +303,9 @@ export function activityRowHtml(activity) {
       </span>
     </div>
   `;
+}
+
+
+export function GetCurrentDate() {
+  return new Date().toISOString();
 }
