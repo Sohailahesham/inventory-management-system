@@ -8,6 +8,7 @@ import { loadReports } from "./pages/reports.js";
 import { loadOrders } from "./pages/orders.js";
 import { loadActivityLog } from "./pages/activity.js";
 import { loadDashboard } from "./pages/dashboard.js";
+import { loadStockAdjustments } from "./pages/stockadjustment.js";
 
 $(document).ready(function () {
   const savedPage = localStorage.getItem("currentPage") || "Products";
@@ -45,6 +46,9 @@ function navigateTo(text) {
       break;
     case "Purchase Orders":
       loadOrders();
+      break;
+    case "Stock Adjustments":
+      loadStockAdjustments();
       break;
     case "Activity Log":
       loadActivityLog();
