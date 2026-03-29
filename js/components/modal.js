@@ -69,6 +69,7 @@ function saveBtnEvent(obj, action, id, onAfterSave) {
         data.status = "pending";
         data.orderDate = new Date().toISOString().split("T")[0];
       }
+      
 
       let productsForAdjustment = null;
       if (obj === "stockAdjustments") {
@@ -122,6 +123,7 @@ function saveBtnEvent(obj, action, id, onAfterSave) {
       else if (action === "Add") await postData(`${obj}`, data);
       location.reload();
     });
+
 }
 function vaildData(obj, data, id, products) {
   let result = true;

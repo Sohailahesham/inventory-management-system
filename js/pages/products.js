@@ -35,27 +35,40 @@ function renderProducts() {
     .join("");
 
   let html = `
-    <div class="d-flex gap-1 mb-3 align-items-center p-3 bg-white rounded border">
-      <i class="bi bi-search text-muted"></i>
-      <input type="text" id="searchProd" placeholder="Search products..." 
-        class="form-control form-control-sm border-0 shadow-none">
-      <select id="categoryFilter" class="form-select form-select-sm border-0 shadow-none form-select-product-category">
-        <option value="">All Categories</option>
-        ${categoryOptions}
-      </select>
-      <select id="statusFilter" class="form-select form-select-sm border-0 shadow-none form-select-product-status">
-        <option value="">All Status</option>
-        <option value="in">In Stock</option>
-        <option value="low">Low Stock</option>
-        <option value="out">Out of Stock</option>
-      </select>
-      <button class="btn btn-primary btn-sm px-3 ms-auto text-nowrap" id="addProductBtn">
-        <i class="bi bi-plus-lg"></i> Add Product
-      </button>
+    <div class="mb-3 p-3 bg-white rounded border">
+
+      <!-- Row 1: Search always full width -->
+      <div class="d-flex align-items-center gap-2 mb-2">
+        <i class="bi bi-search text-muted"></i>
+        <input type="text" id="searchProd" placeholder="Search products..."
+          class="form-control form-control-sm border-0 shadow-none flex-grow-1">
+      </div>
+
+      <!-- Row 2: Filters + Add button -->
+      <div class="d-flex flex-wrap gap-2 align-items-center">
+        <select id="categoryFilter"
+          class="form-select form-select-sm border-0 shadow-none flex-grow-1"
+          style="min-width:130px; max-width:200px;">
+          <option value="">All Categories</option>
+          ${categoryOptions}
+        </select>
+        <select id="statusFilter"
+          class="form-select form-select-sm border-0 shadow-none flex-grow-1"
+          style="min-width:120px; max-width:180px;">
+          <option value="">All Status</option>
+          <option value="in">In Stock</option>
+          <option value="low">Low Stock</option>
+          <option value="out">Out of Stock</option>
+        </select>
+        <button class="btn btn-primary btn-sm px-3 ms-auto text-nowrap" id="addProductBtn">
+          <i class="bi bi-plus-lg"></i> Add Product
+        </button>
+      </div>
+
     </div>
 
-    <div id="searchStats" class="mb-2 small text-muted"></div>
-    
+    <div id="searchStats" class="mb-2 small text-muted px-1"></div>
+
     <div id="productsTableContainer">
       ${getTableHtml()}
     </div>
