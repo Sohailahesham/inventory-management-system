@@ -1,8 +1,13 @@
 import renderTable from "../components/table.js";
 import renderPagination, { paginateData } from "../components/pagination.js";
-import { fetchData, updateData, postData, deleteData } from "../services/api.js";
+import {
+  fetchData,
+  updateData,
+  postData,
+  deleteData,
+} from "../services/api.js";
 import { getModal } from "../components/modal.js";
-import { GetCurrentDate } from "../utils/helpers.js"; 
+import { GetCurrentDate } from "../utils/helpers.js";
 
 let products = [];
 let categories = [];
@@ -30,22 +35,16 @@ function renderProducts() {
     .join("");
 
   let html = `
-    <div class="mb-3 p-3 bg-white rounded border">
-      <div class="d-flex align-items-center gap-2 mb-2">
-        <i class="bi bi-search text-muted"></i>
+      <div class="mb-3 p-3 bg-white rounded border">
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <i class="bi bi-search text-muted d-none d-sm-block"></i>
         <input type="text" id="searchProd" placeholder="Search products..."
-          class="form-control form-control-sm border-0 shadow-none flex-grow-1">
-      </div>
-      <div class="d-flex flex-wrap gap-2 align-items-center">
-        <select id="categoryFilter"
-          class="form-select form-select-sm border-0 shadow-none flex-grow-1"
-          style="min-width:130px; max-width:200px;">
+          class="form-control form-control-sm border-0 shadow-none" style="flex:1; min-width:150px;">
+        <select id="categoryFilter" class="form-select form-select-sm border-0 shadow-none w-auto">
           <option value="">All Categories</option>
           ${categoryOptions}
         </select>
-        <select id="statusFilter"
-          class="form-select form-select-sm border-0 shadow-none flex-grow-1"
-          style="min-width:120px; max-width:180px;">
+        <select id="statusFilter" class="form-select form-select-sm border-0 shadow-none w-auto">
           <option value="">All Status</option>
           <option value="in">In Stock</option>
           <option value="low">Low Stock</option>
@@ -56,6 +55,7 @@ function renderProducts() {
         </button>
       </div>
     </div>
+
     <div id="searchStats" class="mb-2 small text-muted px-1"></div>
     <div id="productsTableContainer">
       ${getTableHtml()}
@@ -76,7 +76,15 @@ function getTableHtml(filteredProducts = products) {
     quantity: p.quantity,
     status: getStatus(p.quantity, p.reorderLevel),
   }));
-  let columns = ["sku", "name", "category", "supplier", "price", "quantity", "status"];
+  let columns = [
+    "sku",
+    "name",
+    "category",
+    "supplier",
+    "price",
+    "quantity",
+    "status",
+  ];
   return (
     renderTable(tableData, columns)
     + renderPagination(filteredProducts.length, currentPage, PAGE_SIZE)
@@ -84,36 +92,50 @@ function getTableHtml(filteredProducts = products) {
 }
 
 function setupEventListeners() {
-  document.getElementById("searchProd")?.addEventListener("input", filterProducts);
-  document.getElementById("categoryFilter")?.addEventListener("change", filterProducts);
-  document.getElementById("statusFilter")?.addEventListener("change", filterProducts);
+  document
+    .getElementById("searchProd")
+    ?.addEventListener("input", filterProducts);
+  document
+    .getElementById("categoryFilter")
+    ?.addEventListener("change", filterProducts);
+  document
+    .getElementById("statusFilter")
+    ?.addEventListener("change", filterProducts);
 
-  document.querySelector("#productsTableContainer").addEventListener("click", function (e) {
-    const pageBtn = e.target.closest(".page-link");
-    if (pageBtn) {
-      const page = Number(pageBtn.dataset.page);
-      const totalPages = Math.ceil(lastFiltered.length / PAGE_SIZE);
-      if (page < 1 || page > totalPages) return;
-      currentPage = page;
-      document.getElementById("productsTableContainer").innerHTML = getTableHtml(lastFiltered);
-      return;
-    }
-    const editBtn = e.target.closest(".edit-btn");
-    const deleteBtn = e.target.closest(".delete-btn");
-    if (editBtn) handleEdit(editBtn.dataset.id);
-    else if (deleteBtn) handleDelete(deleteBtn.dataset.id);
-  });
+  document
+    .querySelector("#productsTableContainer")
+    .addEventListener("click", function (e) {
+      const pageBtn = e.target.closest(".page-link");
+      if (pageBtn) {
+        const page = Number(pageBtn.dataset.page);
+        const totalPages = Math.ceil(lastFiltered.length / PAGE_SIZE);
+        if (page < 1 || page > totalPages) return;
+        currentPage = page;
+        document.getElementById("productsTableContainer").innerHTML =
+          getTableHtml(lastFiltered);
+        return;
+      }
+      const editBtn = e.target.closest(".edit-btn");
+      const deleteBtn = e.target.closest(".delete-btn");
+      if (editBtn) handleEdit(editBtn.dataset.id);
+      else if (deleteBtn) handleDelete(deleteBtn.dataset.id);
+    });
 
-  document.querySelector("#productsTableContainer").addEventListener("change", (e) => {
-    const pageSizeSelect = e.target.closest(".page-size-select");
-    if (pageSizeSelect) {
-      PAGE_SIZE = Number(pageSizeSelect.value);
-      currentPage = 1;
-      document.getElementById("productsTableContainer").innerHTML = getTableHtml(lastFiltered);
-    }
-  });
+  document
+    .querySelector("#productsTableContainer")
+    .addEventListener("change", (e) => {
+      const pageSizeSelect = e.target.closest(".page-size-select");
+      if (pageSizeSelect) {
+        PAGE_SIZE = Number(pageSizeSelect.value);
+        currentPage = 1;
+        document.getElementById("productsTableContainer").innerHTML =
+          getTableHtml(lastFiltered);
+      }
+    });
 
-  document.querySelector("#addProductBtn").addEventListener("click", () => handleAdd());
+  document
+    .querySelector("#addProductBtn")
+    .addEventListener("click", () => handleAdd());
 }
 
 function filterProducts() {
@@ -133,15 +155,21 @@ function filterProducts() {
     if (categoryId && p.categoryId != categoryId) return false;
     if (statusFilter) {
       if (statusFilter === "out" && p.quantity > 0) return false;
-      if (statusFilter === "low" && (p.quantity <= 0 || p.quantity > Number(p.reorderLevel))) return false;
-      if (statusFilter === "in" && p.quantity <= Number(p.reorderLevel)) return false;
+      if (
+        statusFilter === "low"
+        && (p.quantity <= 0 || p.quantity > Number(p.reorderLevel))
+      )
+        return false;
+      if (statusFilter === "in" && p.quantity <= Number(p.reorderLevel))
+        return false;
     }
     return true;
   });
 
   lastFiltered = filtered;
   currentPage = 1;
-  document.getElementById("productsTableContainer").innerHTML = getTableHtml(filtered);
+  document.getElementById("productsTableContainer").innerHTML =
+    getTableHtml(filtered);
   updateStats(filtered.length, searchTerm, categoryId, statusFilter);
 }
 
@@ -163,8 +191,10 @@ function getSupplierName(id) {
   return sup ? sup.name : "undefined";
 }
 function getStatus(quantity, reorderLevel) {
-  if (quantity <= 0) return `<span class="status-badge status-out">Out of stock</span>`;
-  else if (quantity <= Number(reorderLevel)) return `<span class="status-badge status-low">Low stock</span>`;
+  if (quantity <= 0)
+    return `<span class="status-badge status-out">Out of stock</span>`;
+  else if (quantity <= Number(reorderLevel))
+    return `<span class="status-badge status-low">Low stock</span>`;
   else return `<span class="status-badge status-in">In stock</span>`;
 }
 

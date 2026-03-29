@@ -27,19 +27,19 @@ async function loadData() {
 //* render the whole html of Orders page
 function renderOrders() {
   let html = `
-    <div class="d-flex gap-2 mb-3 align-items-center p-3 bg-white rounded border">
-      <i class="bi bi-search text-muted"></i>
-      <input type="text" id="searchOrder" placeholder="Search orders..." 
-        class="form-control form-control-sm border-0 shadow-none">
-        <select id="statusFilter" class="form-select form-select-sm border-0 shadow-none" style="width: 130px;">
-        <option value="">All Status</option>
-        <option value="pending">Pending</option>
-        <option value="received">Recieved</option>
-      </select>
-      <button class="btn btn-primary btn-sm px-3 ms-auto text-nowrap" id="addOrderBtn">
-        <i class="bi bi-plus-lg"></i> New purchase orders
-      </button>
-    </div>
+  <div class="d-flex gap-2 mb-3 align-items-center flex-wrap p-3 bg-white rounded border">
+  <i class="bi bi-search text-muted d-none d-sm-block"></i>
+  <input type="text" id="searchOrder" placeholder="Search orders..."
+    class="form-control form-control-sm border-0 shadow-none" style="flex:1; min-width:150px;">
+  <select id="statusFilter" class="form-select form-select-sm border-0 shadow-none w-auto">
+    <option value="">All Status</option>
+    <option value="pending">Pending</option>
+    <option value="received">Received</option>
+  </select>
+  <button class="btn btn-primary btn-sm px-3 ms-auto text-nowrap" id="addOrderBtn">
+    <i class="bi bi-plus-lg"></i> New Purchase Order
+  </button>
+</div>
     
     <div id="searchStats" class="mb-2 small text-muted"></div>
     

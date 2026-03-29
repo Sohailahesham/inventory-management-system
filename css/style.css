@@ -393,3 +393,25 @@ main {
   padding: 10px 12px;
   color: #475569;
 }
+
+@media (max-width: 576px) {
+  #searchProd,
+  #searchOrder,
+  #searchCat,
+  #searchSup,
+  #searchAdj {
+    flex: 1 1 100%;
+  }
+  #categoryFilter,
+  #statusFilter,
+  #typeFilter {
+    flex: 1 1 auto;
+  }
+  #addProductBtn,
+  #addOrderBtn,
+  #addCategoryBtn,
+  #addSupplierBtn,
+  #addAdjustmentBtn {
+    width: 100%;
+  }
+}
