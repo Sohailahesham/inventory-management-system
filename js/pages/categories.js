@@ -56,7 +56,7 @@ function getTableHtml(filteredCategories = categories) {
     products: getProductsNumber(c.id),
   }));
 
-  let columns = ["id", "name", "description", "products"];
+  let columns = ["name", "description", "products"];
 
   return (
     renderTable(tableData, columns)

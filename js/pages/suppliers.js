@@ -59,15 +59,7 @@ function getTableHtml(filteredSuppliers = suppliers) {
     products: getProductsNumber(s.id),
   }));
 
-  let columns = [
-    "id",
-    "name",
-    "contact",
-    "email",
-    "phone",
-    "address",
-    "products",
-  ];
+  let columns = ["name", "contact", "email", "phone", "address", "products"];
 
   return (
     renderTable(tableData, columns)

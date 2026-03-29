@@ -66,7 +66,7 @@ function getTableHtml(filteredOrders = orders) {
         : `<span class="text-muted">Completed</span>`,
   }));
 
-  let columns = ["id", "supplier", "items", "orderDate", "status", "actions"];
+  let columns = ["supplier", "items", "orderDate", "status", "actions"];
   return (
     renderTable(tableData, columns, false)
     + renderPagination(filteredOrders.length, currentPage, PAGE_SIZE)
