@@ -12,6 +12,7 @@ import {
   isVaildSupplierData,
   isVaildOrderData,
   isVaildStockAdjustmentData,
+  GetCurrentDate,         
 } from "../utils/helpers.js";
 
 import { postData, updateData, fetchData } from "../services/api.js";
@@ -45,31 +46,33 @@ export async function getModal(obj, action, id, onAfterSave) {
       </div>
     </div>
   </div>`;
-  //^ show modal
+
   document.body.insertAdjacentHTML("beforeend", html);
   const modalElement = document.querySelector(`#${objModalName}`);
   const modal = new bootstrap.Modal(modalElement);
   modal.show();
+
   if (obj === "orders") setupOrderFormListeners();
   if (obj === "stockAdjustments") setupStockAdjustmentListeners();
-  //^ handle events Save - Close - Delete Modal
-  saveBtnEvent(obj, action, id, onAfterSave);
-  closeBtnEvent(modalElement);
+
+  saveBtnEvent(obj, action, id, modal, modalElement, onAfterSave);
+  closeBtnEvent(modalElement, modal);
   deleteModal(modalElement);
 }
 
-function saveBtnEvent(obj, action, id, onAfterSave) {
+
+async function saveBtnEvent(obj, action, id, modal, modalElement, onAfterSave) {
   document
     .querySelector(".save-btn")
     .addEventListener("click", async function () {
       const form = document.querySelector("form");
       let data = Object.fromEntries(new FormData(form));
+
       if (obj === "orders") {
         data.items = JSON.parse(form.dataset.items || "[]");
         data.status = "pending";
         data.orderDate = new Date().toISOString().split("T")[0];
       }
-      
 
       let productsForAdjustment = null;
       if (obj === "stockAdjustments") {
@@ -82,28 +85,27 @@ function saveBtnEvent(obj, action, id, onAfterSave) {
       if (obj === "stockAdjustments") {
         const product = productsForAdjustment.find((p) => p.id == data.productId);
         if (!product) return;
+
         const qty = parseInt(data.quantity, 10);
         const type = data.type;
         const reason = data.reason;
         const oldQty = Number(product.quantity) || 0;
-        let newQty;
-        if (type === "increase") newQty = oldQty + qty;
-        else newQty = oldQty - qty;
-        const nowIso = new Date().toISOString();
+        const newQty = type === "increase" ? oldQty + qty : oldQty - qty;
+        const nowIso = GetCurrentDate(); 
+
         await postData("stockAdjustments", {
           productId: product.id,
           productName: product.name,
-          type: type,
+          type,
           quantity: qty,
-          reason: reason,
+          reason,
           date: nowIso,
           oldQuantity: oldQty,
           newQuantity: newQty,
         });
-        await updateData("products", product.id, {
-          ...product,
-          quantity: newQty,
-        });
+
+        await updateData("products", product.id, { ...product, quantity: newQty });
+
         const sign = type === "increase" ? "+" : "−";
         await postData("activityLog", {
           action: "STOCK_ADJUSTMENT",
@@ -111,20 +113,49 @@ function saveBtnEvent(obj, action, id, onAfterSave) {
           user: "admin",
           timestamp: nowIso,
         });
-        const modalEl = document.querySelector(`#${obj}Modal`);
-        const modalInstance = bootstrap.Modal.getInstance(modalEl);
-        if (modalInstance) modalInstance.hide();
+
+        modal.hide();
         if (typeof onAfterSave === "function") await onAfterSave();
-        else location.reload();
         return;
       }
 
-      if (action === "Edit") await updateData(`${obj}`, id, data);
-      else if (action === "Add") await postData(`${obj}`, data);
-      location.reload();
-    });
+      if (action === "Edit") {
+        await updateData(`${obj}`, id, data);
+      } else if (action === "Add") {
+        await postData(`${obj}`, data);
+      }
 
+      if (obj === "products" && action === "Add") {
+        await postData("activityLog", {
+          action: "CREATE_PRODUCT",
+          details: `New product added: ${data.name} (${data.sku})`,
+          user: "admin",
+          timestamp: GetCurrentDate(),
+        });
+      } else if (obj === "products" && action === "Edit") {
+        await postData("activityLog", {                         
+          action: "UPDATE_PRODUCT",
+          details: `Product updated: ${data.name} (${data.sku})`,
+          user: "admin",
+          timestamp: GetCurrentDate(),
+        });
+      } else if (obj === "orders") {
+        await postData("activityLog", {
+          action: "CREATE_PURCHASE_ORDER",
+          details: `Purchase Order created — ${data.items.length} item(s) from supplier`,
+          user: "admin",
+          timestamp: GetCurrentDate(),
+        });
+      }
+
+
+      modal.hide();
+      if (typeof onAfterSave === "function") {
+        await onAfterSave();
+      }
+    });
 }
+
 function vaildData(obj, data, id, products) {
   let result = true;
   if (obj === "products") result = isVaildProductData(data, id);
@@ -135,17 +166,16 @@ function vaildData(obj, data, id, products) {
   return result;
 }
 
-function closeBtnEvent(modalElement) {
+function closeBtnEvent(modalElement, modal) {
   modalElement
     .querySelector(".close-btn")
     .addEventListener("click", function () {
       if (confirm("Are you sure you want to discard changes?")) {
-        const modalInstance = bootstrap.Modal.getInstance(modalElement);
-        modalInstance.hide();
+        modal.hide();
       }
     });
 }
-//* Delete modal from html code after it hidden
+
 function deleteModal(modalElement) {
   modalElement.addEventListener("hidden.bs.modal", function () {
     modalElement.remove();
@@ -181,12 +211,10 @@ function setupOrderFormListeners() {
 
 function renderItemsList(items) {
   const list = document.getElementById("itemsList");
-
   if (items.length === 0) {
     list.innerHTML = `<p class="text-muted small mb-0">No items added yet</p>`;
     return;
   }
-
   list.innerHTML = items
     .map(
       (item, i) => `
@@ -228,15 +256,10 @@ function updateStockAdjustmentCurrentDisplay() {
   const qty = opt.dataset.qty !== undefined ? Number(opt.dataset.qty) : 0;
   const unit = opt.dataset.unit || "";
   const reorderRaw = opt.dataset.reorder;
-  const reorder =
-    reorderRaw !== undefined && reorderRaw !== ""
-      ? Number(reorderRaw)
-      : "—";
+  const reorder = reorderRaw !== undefined && reorderRaw !== "" ? Number(reorderRaw) : "—";
   box.classList.remove("d-none");
   let text = `Current stock: <strong>${qty}</strong>`;
   if (unit) text += ` ${unit}`;
-  if (reorder !== "—") {
-    text += ` &nbsp;|&nbsp; Reorder level: <strong>${reorder}</strong>`;
-  }
+  if (reorder !== "—") text += ` &nbsp;|&nbsp; Reorder level: <strong>${reorder}</strong>`;
   box.innerHTML = text;
 }

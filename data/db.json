@@ -1,63 +1,67 @@
 {
   "products": [
     {
-      "name": "Laptop Pro 14",
+      "id": 1,
+      "name": "Laptop Pro 14\"",
       "sku": "LP-001",
-      "categoryId": "1",
-      "supplierId": "1",
-      "price": "45000",
-      "quantity": "8",
-      "reorderLevel": "",
+      "categoryId": 1,
+      "supplierId": 1,
+      "price": 45000,
+      "quantity": 8,
+      "reorderLevel": 5,
       "unit": "pcs",
-      "id": "1"
+      "description": "Professional 14-inch laptop"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Wireless Mouse",
       "sku": "WM-002",
       "categoryId": 1,
       "supplierId": 1,
       "price": 850,
-      "quantity": 23,
+      "quantity": 3,
       "reorderLevel": 10,
       "unit": "pcs",
       "description": "Wireless optical mouse"
     },
     {
+      "id": 3,
       "name": "Office Chair",
       "sku": "OC-003",
-      "categoryId": "2",
-      "supplierId": "2",
-      "price": "3500",
-      "quantity": 19,
-      "reorderLevel": "15",
+      "categoryId": 2,
+      "supplierId": 2,
+      "price": 3500,
+      "quantity": 12,
+      "reorderLevel": 5,
       "unit": "pcs",
-      "id": "3"
+      "description": "Ergonomic office chair"
     },
     {
+      "id": 4,
       "name": "A4 Paper Ream",
       "sku": "PA-004",
-      "categoryId": "3",
-      "supplierId": "3",
-      "price": "120",
-      "quantity": 10,
-      "reorderLevel": "20",
-      "unit": "pcs",
-      "id": "4"
+      "categoryId": 3,
+      "supplierId": 3,
+      "price": 120,
+      "quantity": 2,
+      "reorderLevel": 20,
+      "unit": "ream",
+      "description": "A4 paper - 500 sheets"
     },
     {
+      "id": 5,
       "name": "USB-C Hub",
       "sku": "UC-005",
-      "categoryId": "1",
-      "supplierId": "1",
-      "price": "1200",
-      "quantity": "20",
-      "reorderLevel": "8",
+      "categoryId": 1,
+      "supplierId": 1,
+      "price": 1200,
+      "quantity": 15,
+      "reorderLevel": 8,
       "unit": "pcs",
-      "id": "5"
+      "description": "7-in-1 USB-C hub"
     },
     {
-      "id": "6",
+      "id": 6,
       "name": "Monitor 24\"",
       "sku": "MN-006",
       "categoryId": 1,
@@ -69,103 +73,52 @@
       "description": "24-inch Full HD monitor"
     },
     {
-      "id": "7",
+      "id": 7,
       "name": "Standing Desk",
       "sku": "SD-007",
       "categoryId": 2,
       "supplierId": 2,
       "price": 8500,
-      "quantity": 16,
+      "quantity": 6,
       "reorderLevel": 3,
       "unit": "pcs",
       "description": "Electric height-adjustable desk"
     },
     {
+      "id": 8,
       "name": "Printer Ink Set",
       "sku": "PI-008",
-      "categoryId": "3",
-      "supplierId": "3",
-      "price": "450",
-      "quantity": "4",
-      "reorderLevel": "5",
-      "unit": "box",
-      "id": "8"
-    },
-    {
-      "name": "laptop pro 15",
-      "sku": "LP-009",
-      "categoryId": "1",
-      "supplierId": "1",
-      "price": "50000",
-      "quantity": "10",
-      "reorderLevel": "15",
-      "unit": "Pcs",
-      "id": "ef47"
-    },
-    {
-      "name": "A3 Paper",
-      "sku": "UC-011",
-      "categoryId": "3",
-      "supplierId": "3",
-      "price": "20",
-      "quantity": "20",
-      "reorderLevel": "5",
-      "unit": "box",
-      "id": "c5c9"
-    },
-    {
-      "id": "8a98",
-      "name": "Red Dress",
-      "sku": "DR-012",
-      "categoryId": "99f0",
-      "supplierId": "d5be",
-      "price": "1000",
-      "quantity": "10",
-      "reorderLevel": "2",
-      "unit": "box"
-    },
-    {
-      "id": "9200",
-      "name": "blue T-shirt",
-      "sku": "TS-014",
-      "categoryId": "99f0",
-      "supplierId": "d5be",
-      "price": "500",
-      "quantity": "20",
-      "reorderLevel": "5",
-      "unit": "box"
+      "categoryId": 3,
+      "supplierId": 3,
+      "price": 450,
+      "quantity": 1,
+      "reorderLevel": 5,
+      "unit": "set",
+      "description": "4-color printer ink set"
     }
   ],
+
   "categories": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Electronics",
       "description": "Electronic devices and accessories"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Furniture",
       "description": "Office and home furniture"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "Stationery",
       "description": "Office supplies and paper products"
-    },
-    {
-      "id": "99f0",
-      "name": "Clothes",
-      "description": "Everything human wears"
-    },
-    {
-      "id": "4636",
-      "name": "food",
-      "description": "Everything human eats"
     }
   ],
+
   "suppliers": [
     {
-      "id": "1",
+      "id": 1,
       "name": "TechWorld Egypt",
       "contact": "Ahmed Karim",
       "email": "sales@techworld.eg",
@@ -173,7 +126,7 @@
       "address": "Cairo, Egypt"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Cairo Furnish",
       "contact": "Sara Nour",
       "email": "info@cairofurnish.com",
@@ -181,28 +134,21 @@
       "address": "Giza, Egypt"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "Delta Office",
       "contact": "Mohamed Ali",
       "email": "orders@deltaoffice.eg",
       "phone": "+20 122 456 7890",
       "address": "Alexandria, Egypt"
-    },
-    {
-      "id": "d5be",
-      "name": "Shein",
-      "contact": "Sohaila Hesham",
-      "email": "sohaila.hesham456@gmail.com",
-      "phone": "+201060689680",
-      "address": "Teraa, st"
     }
   ],
-  "orders": [
+
+  "purchaseOrders": [
     {
-      "id": "1",
+      "id": 1,
       "supplierId": 1,
       "orderDate": "2025-03-20T10:00:00Z",
-      "status": "received",
+      "status": "pending",
       "items": [
         {
           "productId": 2,
@@ -216,7 +162,7 @@
       "notes": "Urgent order"
     },
     {
-      "id": "2",
+      "id": 2,
       "supplierId": 3,
       "orderDate": "2025-03-10T09:00:00Z",
       "receivedDate": "2025-03-12T14:30:00Z",
@@ -234,10 +180,10 @@
       "notes": "10% discount applied"
     },
     {
-      "id": "3",
+      "id": 3,
       "supplierId": 2,
       "orderDate": "2025-03-22T11:00:00Z",
-      "status": "received",
+      "status": "pending",
       "items": [
         {
           "productId": 3,
@@ -255,133 +201,12 @@
         }
       ],
       "totalAmount": 72000
-    },
-    {
-      "id": "dbe8",
-      "supplierId": "3",
-      "expectedDate": "2026-03-29",
-      "items": [
-        {
-          "productId": "c5c9",
-          "productName": "A3 Paper",
-          "quantity": 20
-        }
-      ],
-      "status": "pending",
-      "orderDate": "2026-03-27"
-    },
-    {
-      "id": "d5c5",
-      "supplierId": "3",
-      "expectedDate": "2026-03-28",
-      "items": [
-        {
-          "productId": "4",
-          "productName": "A4 Paper Ream",
-          "quantity": 10
-        }
-      ],
-      "status": "received",
-      "orderDate": "2026-03-27"
-    },
-    {
-      "id": "3e62",
-      "supplierId": "d5be",
-      "expectedDate": "2026-03-30",
-      "items": [
-        {
-          "productId": "9200",
-          "productName": "blue T-shirt",
-          "quantity": 10
-        },
-        {
-          "productId": "8a98",
-          "productName": "Red Dress",
-          "quantity": 20
-        }
-      ],
-      "status": "pending",
-      "orderDate": "2026-03-27"
-    },
-    {
-      "id": "6d1f",
-      "supplierId": "d5be",
-      "expectedDate": "2026-03-30",
-      "items": [
-        {
-          "productId": "9200",
-          "productName": "blue T-shirt",
-          "quantity": 10
-        },
-        {
-          "productId": "8a98",
-          "productName": "Red Dress",
-          "quantity": 20
-        }
-      ],
-      "status": "pending",
-      "orderDate": "2026-03-27"
-    },
-    {
-      "id": "a34b",
-      "supplierId": "1",
-      "expectedDate": "2026-03-30",
-      "items": [
-        {
-          "productId": "1",
-          "productName": "Laptop Pro 14",
-          "quantity": 10
-        }
-      ],
-      "status": "pending",
-      "orderDate": "2026-03-27"
-    },
-    {
-      "id": "0742",
-      "supplierId": "2",
-      "expectedDate": "",
-      "items": [
-        {
-          "productId": "7",
-          "productName": "Standing Desk",
-          "quantity": 5
-        }
-      ],
-      "status": "received",
-      "orderDate": "2026-03-27"
-    },
-    {
-      "id": "4036",
-      "supplierId": "1",
-      "expectedDate": "2026-04-30",
-      "items": [
-        {
-          "productId": "5",
-          "productName": "USB-C Hub",
-          "quantity": 3
-        }
-      ],
-      "status": "pending",
-      "orderDate": "2026-03-28"
-    },
-    {
-      "id": "c366",
-      "supplierId": "2",
-      "expectedDate": "2026-04-09",
-      "items": [
-        {
-          "productId": "1",
-          "productName": "Laptop Pro 14",
-          "quantity": 4
-        }
-      ],
-      "status": "pending",
-      "orderDate": "2026-03-28"
     }
   ],
+
   "stockAdjustments": [
     {
-      "id": "1",
+      "id": 1,
       "productId": 8,
       "productName": "Printer Ink Set",
       "type": "decrease",
@@ -392,7 +217,7 @@
       "newQuantity": 1
     },
     {
-      "id": "2",
+      "id": 2,
       "productId": 4,
       "productName": "A4 Paper Ream",
       "type": "decrease",
@@ -403,7 +228,7 @@
       "newQuantity": 2
     },
     {
-      "id": "3",
+      "id": 3,
       "productId": 2,
       "productName": "Wireless Mouse",
       "type": "increase",
@@ -414,81 +239,83 @@
       "newQuantity": 13
     }
   ],
+
   "activityLog": [
     {
-      "id": "1",
+      "id": 1,
       "action": "CREATE_PRODUCT",
       "details": "New product added: Laptop Pro 14\" (SKU: LP-001)",
       "user": "admin",
       "timestamp": "2025-03-10T09:00:00Z"
     },
     {
-      "id": "2",
+      "id": 2,
       "action": "RECEIVE_ORDER",
       "details": "Purchase Order #2 received - Added 50x A4 Paper Ream to stock",
       "user": "admin",
       "timestamp": "2025-03-10T11:00:00Z"
     },
     {
-      "id": "3",
+      "id": 3,
       "action": "STOCK_ADJUSTMENT",
       "details": "Stock adjustment: -3 Printer Ink Set (Reason: Damaged goods)",
       "user": "admin",
       "timestamp": "2025-03-12T14:30:00Z"
     },
     {
-      "id": "4",
+      "id": 4,
       "action": "STOCK_ADJUSTMENT",
       "details": "Stock adjustment: -15 A4 Paper Ream (Reason: Theft/Loss)",
       "user": "admin",
       "timestamp": "2025-03-14T10:00:00Z"
     },
     {
-      "id": "5",
+      "id": 5,
       "action": "LOW_STOCK_ALERT",
       "details": "Low stock alert: A4 Paper Ream (Quantity: 2, Reorder level: 20)",
       "user": "system",
       "timestamp": "2025-03-14T10:05:00Z"
     },
     {
-      "id": "6",
+      "id": 6,
       "action": "LOW_STOCK_ALERT",
       "details": "Low stock alert: Wireless Mouse (Quantity: 3, Reorder level: 10)",
       "user": "system",
       "timestamp": "2025-03-14T10:05:00Z"
     },
     {
-      "id": "7",
+      "id": 7,
       "action": "CREATE_PURCHASE_ORDER",
       "details": "Purchase Order #3 created for supplier: Cairo Furnish - Amount: 72000",
       "user": "admin",
       "timestamp": "2025-03-22T11:00:00Z"
     },
     {
-      "id": "8",
+      "id": 8,
       "action": "STOCK_ADJUSTMENT",
       "details": "Stock adjustment: +10 Wireless Mouse (Reason: Inventory count adjustment)",
       "user": "admin",
       "timestamp": "2025-03-15T09:00:00Z"
     },
     {
-      "id": "9",
+      "id": 9,
       "action": "UPDATE_PRODUCT",
       "details": "Product updated: Monitor 24\" - Price changed from 12500 to 12000",
       "user": "admin",
       "timestamp": "2025-03-16T13:00:00Z"
     },
     {
-      "id": "10",
+      "id": 10,
       "action": "LOW_STOCK_ALERT",
       "details": "Low stock alert: Printer Ink Set (Quantity: 1, Reorder level: 5)",
       "user": "system",
       "timestamp": "2025-03-16T13:05:00Z"
     }
   ],
+
   "lowStockAlerts": [
     {
-      "id": "1",
+      "id": 1,
       "productId": 4,
       "productName": "A4 Paper Ream",
       "sku": "PA-004",
@@ -498,7 +325,7 @@
       "status": "active"
     },
     {
-      "id": "2",
+      "id": 2,
       "productId": 2,
       "productName": "Wireless Mouse",
       "sku": "WM-002",
@@ -508,7 +335,7 @@
       "status": "resolved"
     },
     {
-      "id": "3",
+      "id": 3,
       "productId": 8,
       "productName": "Printer Ink Set",
       "sku": "PI-008",
@@ -517,6 +344,5 @@
       "date": "2025-03-16T13:05:00Z",
       "status": "active"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }
