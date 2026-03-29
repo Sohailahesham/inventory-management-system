@@ -238,7 +238,6 @@ function getStatus(quantity, reorderLevel) {
   else return `<span class="status-badge status-in">In stock</span>`;
 }
 
-
 //* add button
 function handleAdd(id = "") {
   getModal("products", "Add", id);

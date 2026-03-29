@@ -1,3 +1,6 @@
+//* using fake server
+//^ json-server --watch data/db.json --port 3000 ==> run this command in terminal
+
 import { loadProducts } from "./pages/products.js";
 import { loadCategories } from "./pages/categories.js";
 import { loadSuppliers } from "./pages/suppliers.js";
@@ -7,29 +10,21 @@ import { loadActivityLog } from "./pages/activity.js";
 import { loadDashboard } from "./pages/dashboard.js";
 import { loadStockAdjustments } from "./pages/stockadjustment.js";
 
-document.addEventListener("DOMContentLoaded", function () {
+$(document).ready(function () {
   const savedPage = localStorage.getItem("currentPage") || "Products";
   navigateTo(savedPage);
 
-  document.querySelectorAll(".nav-item").forEach((item) => {
-    item.addEventListener("click", function () {
-      const text = this.dataset.page;
-      if (!text) return;
-      navigateTo(text);
-    });
+  $(".nav-item").on("click", function () {
+    const text = $(this).data("page");
+    if (!text) return;
+    navigateTo(text);
   });
 });
 
 function navigateTo(text) {
-  document.getElementById("pageTitle").textContent = text;
-
-  document.querySelectorAll(".nav-item").forEach((l) => {
-    l.classList.remove("active-content");
-  });
-
-  document.querySelectorAll(".nav-item").forEach((l) => {
-    if (l.dataset.page === text) l.classList.add("active-content");
-  });
+  $("#pageTitle").text(text);
+  $(".nav-item").removeClass("active-content");
+  $(`.nav-item[data-page="${text}"]`).addClass("active-content");
 
   localStorage.setItem("currentPage", text);
 
