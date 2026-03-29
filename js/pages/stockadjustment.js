@@ -22,19 +22,19 @@ async function loadData() {
 
 function renderStockAdjustmentsPage() {
   const html = `
-    <div class="d-flex gap-1 mb-3 align-items-center p-3 bg-white rounded border">
-      <i class="bi bi-search text-muted"></i>
-      <input type="text" id="searchAdj" placeholder="Search adjustments..."
-        class="form-control form-control-sm border-0 shadow-none">
-      <select id="typeFilter" class="form-select form-select-sm border-0 shadow-none form-select-adjustment-type">
-        <option value="">All types</option>
-        <option value="increase">Add stock</option>
-        <option value="decrease">Remove stock</option>
-      </select>
-      <button class="btn btn-primary btn-sm px-3 ms-auto text-nowrap" id="addAdjustmentBtn" type="button">
-        <i class="bi bi-sliders"></i> New adjustment
-      </button>
-    </div>
+  <div class="d-flex gap-2 mb-3 align-items-center flex-wrap p-3 bg-white rounded border">
+  <i class="bi bi-search text-muted d-none d-sm-block"></i>
+  <input type="text" id="searchAdj" placeholder="Search adjustments..."
+    class="form-control form-control-sm border-0 shadow-none" style="flex:1; min-width:150px;">
+  <select id="typeFilter" class="form-select form-select-sm border-0 shadow-none w-auto">
+    <option value="">All Types</option>
+    <option value="increase">Add Stock</option>
+    <option value="decrease">Remove Stock</option>
+  </select>
+  <button class="btn btn-primary btn-sm px-3 ms-auto text-nowrap" id="addAdjustmentBtn">
+    <i class="bi bi-sliders"></i> New Adjustment
+  </button>
+</div>
 
     <div id="searchStats" class="mb-2 small text-muted"></div>
 

@@ -1,8 +1,8 @@
 import { getModal } from "../components/modal.js";
 import renderPagination, { paginateData } from "../components/pagination.js";
 import renderTable from "../components/table.js";
-import { fetchData, deleteData, postData } from "../services/api.js"; // ✅ ADDED: postData for activity log
-import { GetCurrentDate } from "../utils/helpers.js"; // ✅ ADDED: for activity log timestamp
+import { fetchData, deleteData, postData } from "../services/api.js"; 
+import { GetCurrentDate } from "../utils/helpers.js";
 
 let products = [];
 let suppliers = [];
@@ -24,14 +24,14 @@ async function loadData() {
 
 function renderSuppliers() {
   let html = `
-    <div class="d-flex gap-2 mb-3 align-items-center p-3 bg-white rounded border">
-      <i class="bi bi-search text-muted"></i>
-      <input type="text" id="searchSup" placeholder="Search suppliers..." 
-        class="form-control form-control-sm border-0 shadow-none">
-      <button class="btn btn-primary btn-sm px-3 ms-auto text-nowrap" id="addSupplierBtn">
-        <i class="bi bi-plus-lg"></i> Add Supplier
-      </button>
-    </div>
+  <div class="d-flex gap-2 mb-3 align-items-center flex-wrap p-3 bg-white rounded border">
+  <i class="bi bi-search text-muted d-none d-sm-block"></i>
+  <input type="text" id="searchSup" placeholder="Search suppliers..."
+    class="form-control form-control-sm border-0 shadow-none" style="flex:1; min-width:150px;">
+  <button class="btn btn-primary btn-sm px-3 ms-auto text-nowrap" id="addSupplierBtn">
+    <i class="bi bi-plus-lg"></i> Add Supplier
+  </button>
+</div>
     <div id="searchStats" class="mb-2 small text-muted"></div>
     <div id="suppliersTableContainer">
       ${getTableHtml()}
