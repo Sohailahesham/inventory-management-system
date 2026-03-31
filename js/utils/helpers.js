@@ -308,24 +308,28 @@ export function getPendingOrdersCount(orders) {
 
 //* Activity log — shared with Activity page and Dashboard
 export function getActionStyle(action) {
-  if (action.includes("STOCK_ADJUSTMENT"))
+  if (action === "STOCK_ADJUSTMENT")
     return { color: "warning", label: "adjust" };
-  if (action.includes("RECEIVE_ORDER"))
+  if (action === "RECEIVE_ORDER")
     return { color: "primary", label: "order" };
-  if (action.includes("CREATE_PURCHASE_ORDER"))
+  if (action === "CREATE_PURCHASE_ORDER")
     return { color: "primary", label: "order" };
-  if (action.includes("CREATE_PRODUCT"))
+  if (action === "CREATE_PRODUCT")
     return { color: "success", label: "add" };
-  if (action.includes("UPDATE_PRODUCT"))
+  if (action === "UPDATE_PRODUCT")
     return { color: "success", label: "update" };
-  if (action.includes("DELETE_PRODUCT"))
-    return { color: "danger", label: "delete" }; // ✅ ADDED: delete product action style
-  if (action.includes("DELETE_CATEGORY"))
-    return { color: "danger", label: "delete" }; // ✅ ADDED: delete category action style
-  if (action.includes("DELETE_SUPPLIER"))
-    return { color: "danger", label: "delete" }; // ✅ ADDED: delete supplier action style
-  if (action.includes("LOW_STOCK_ALERT"))
+  if (action === "DELETE_PRODUCT")
+    return { color: "danger", label: "delete" }; 
+  if (action === "DELETE_CATEGORY")
+    return { color: "danger", label: "delete" }; 
+  if (action === "DELETE_SUPPLIER")
+    return { color: "danger", label: "delete" }; 
+  if (action === "LOW_STOCK_ALERT")
     return { color: "danger", label: "alert" };
+  if(action === "LOG_IN")
+    return {color:'info',label:"User Log IN"};
+  if(action ==="LOG_OUT")    
+    return {color:'info',label:"User Log OUT"};
   return { color: "secondary", label: "info" };
 }
 export function formatActivityTimestamp(timestamp) {
@@ -338,6 +342,7 @@ export function formatActivityTimestamp(timestamp) {
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
 export function activityRowHtml(activity) {
+
   const { color, label } = getActionStyle(activity.action);
   const date = formatActivityTimestamp(activity.timestamp);
   return `
