@@ -1,8 +1,8 @@
 import { getModal } from "../components/modal.js";
 import renderPagination, { paginateData } from "../components/pagination.js";
 import renderTable from "../components/table.js";
-import { fetchData, deleteData, postData } from "../services/api.js"; 
-import { GetCurrentDate } from "../utils/helpers.js";
+import { fetchData, deleteData, postData } from "../services/api.js";
+import { GetCurrentDate, sortData } from "../utils/helpers.js";
 
 let products = [];
 let suppliers = [];
@@ -19,6 +19,7 @@ export async function loadSuppliers() {
 async function loadData() {
   products = await fetchData("products");
   suppliers = await fetchData("suppliers");
+  suppliers = sortData(suppliers);
   lastFiltered = [...suppliers];
 }
 
@@ -59,34 +60,44 @@ function getTableHtml(filteredSuppliers = suppliers) {
 }
 
 function setupEventListeners() {
-  document.getElementById("searchSup")?.addEventListener("input", filterSuppliers);
+  document
+    .getElementById("searchSup")
+    ?.addEventListener("input", filterSuppliers);
 
-  document.querySelector("#suppliersTableContainer").addEventListener("click", function (e) {
-    const editBtn = e.target.closest(".edit-btn");
-    const deleteBtn = e.target.closest(".delete-btn");
-    if (editBtn) handleEdit(editBtn.dataset.id);
-    else if (deleteBtn) handleDelete(deleteBtn.dataset.id);
+  document
+    .querySelector("#suppliersTableContainer")
+    .addEventListener("click", function (e) {
+      const editBtn = e.target.closest(".edit-btn");
+      const deleteBtn = e.target.closest(".delete-btn");
+      if (editBtn) handleEdit(editBtn.dataset.id);
+      else if (deleteBtn) handleDelete(deleteBtn.dataset.id);
 
-    const pageBtn = e.target.closest(".page-link");
-    if (pageBtn) {
-      const page = Number(pageBtn.dataset.page);
-      const totalPages = Math.ceil(lastFiltered.length / PAGE_SIZE);
-      if (page < 1 || page > totalPages) return;
-      currentPage = page;
-      document.getElementById("suppliersTableContainer").innerHTML = getTableHtml(lastFiltered);
-    }
-  });
+      const pageBtn = e.target.closest(".page-link");
+      if (pageBtn) {
+        const page = Number(pageBtn.dataset.page);
+        const totalPages = Math.ceil(lastFiltered.length / PAGE_SIZE);
+        if (page < 1 || page > totalPages) return;
+        currentPage = page;
+        document.getElementById("suppliersTableContainer").innerHTML =
+          getTableHtml(lastFiltered);
+      }
+    });
 
-  document.querySelector("#suppliersTableContainer").addEventListener("change", (e) => {
-    const pageSizeSelect = e.target.closest(".page-size-select");
-    if (pageSizeSelect) {
-      PAGE_SIZE = Number(pageSizeSelect.value);
-      currentPage = 1;
-      document.getElementById("suppliersTableContainer").innerHTML = getTableHtml(lastFiltered);
-    }
-  });
+  document
+    .querySelector("#suppliersTableContainer")
+    .addEventListener("change", (e) => {
+      const pageSizeSelect = e.target.closest(".page-size-select");
+      if (pageSizeSelect) {
+        PAGE_SIZE = Number(pageSizeSelect.value);
+        currentPage = 1;
+        document.getElementById("suppliersTableContainer").innerHTML =
+          getTableHtml(lastFiltered);
+      }
+    });
 
-  document.querySelector("#addSupplierBtn").addEventListener("click", () => handleAdd());
+  document
+    .querySelector("#addSupplierBtn")
+    .addEventListener("click", () => handleAdd());
 }
 
 function filterSuppliers() {
@@ -102,7 +113,8 @@ function filterSuppliers() {
   });
   lastFiltered = filtered;
   currentPage = 1;
-  document.getElementById("suppliersTableContainer").innerHTML = getTableHtml(filtered);
+  document.getElementById("suppliersTableContainer").innerHTML =
+    getTableHtml(filtered);
   updateStats(filtered.length, searchTerm);
 }
 

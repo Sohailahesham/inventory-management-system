@@ -2,6 +2,7 @@ import renderTable from "../components/table.js";
 import { fetchData, updateData } from "../services/api.js";
 import { getModal } from "../components/modal.js";
 import renderPagination, { paginateData } from "../components/pagination.js";
+import { sortData } from "../utils/helpers.js";
 let products = [];
 let categories = [];
 let suppliers = [];
@@ -21,6 +22,7 @@ async function loadData() {
   categories = await fetchData("categories");
   suppliers = await fetchData("suppliers");
   orders = await fetchData("orders");
+  orders = sortData(orders);
   lastFiltered = [...orders];
 }
 
@@ -75,7 +77,6 @@ function getTableHtml(filteredOrders = orders) {
 
 function getSupplierName(id) {
   let sup = suppliers.find((sup) => sup.id == id);
-  console.log(sup);
   return sup.name;
 }
 function getItems(items) {

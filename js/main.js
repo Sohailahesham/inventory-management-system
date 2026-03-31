@@ -1,5 +1,5 @@
 //* using fake server
-//^ json-server --watch data/db.json --port 3000 ==> run this command in terminal
+//^ run `npm run server` in the terminal before using the app
 
 import { loadProducts } from "./pages/products.js";
 import { loadCategories } from "./pages/categories.js";
@@ -9,9 +9,15 @@ import { loadOrders } from "./pages/orders.js";
 import { loadActivityLog } from "./pages/activity.js";
 import { loadDashboard } from "./pages/dashboard.js";
 import { loadStockAdjustments } from "./pages/stockadjustment.js";
+import { checkAuth, initLogoutButton } from "./pages/login.js";
 
 $(document).ready(function () {
-  const savedPage = localStorage.getItem("currentPage") || "Products";
+  const currentUser = checkAuth();
+  if (!currentUser) return;
+
+  initLogoutButton();
+
+  const savedPage = localStorage.getItem("currentPage") || "Dashboard";
   navigateTo(savedPage);
 
   $(".nav-item").on("click", function () {
@@ -52,6 +58,9 @@ function navigateTo(text) {
       break;
     case "Activity Log":
       loadActivityLog();
+      break;
+    default:
+      loadDashboard();
       break;
   }
 }

@@ -1,8 +1,8 @@
 import renderTable from "../components/table.js";
-import { fetchData, deleteData, postData } from "../services/api.js"; // ✅ ADDED: postData for activity log
+import { fetchData, deleteData, postData } from "../services/api.js";
 import { getModal } from "../components/modal.js";
 import renderPagination, { paginateData } from "../components/pagination.js";
-import { GetCurrentDate } from "../utils/helpers.js"; // ✅ ADDED: for activity log timestamp
+import { GetCurrentDate, sortData } from "../utils/helpers.js";
 
 let products = [];
 let categories = [];
@@ -19,9 +19,11 @@ export async function loadCategories() {
 async function loadData() {
   products = await fetchData("products");
   categories = await fetchData("categories");
+  categories = sortData(categories);
   lastFiltered = [...categories];
 }
 
+//* Retrieve Categories
 function renderCategories() {
   let html = `
   <div class="d-flex gap-2 mb-3 align-items-center flex-wrap p-3 bg-white rounded border">
@@ -40,6 +42,7 @@ function renderCategories() {
   document.getElementById("pageContent").innerHTML = html;
 }
 
+//* Get Categories Table
 function getTableHtml(filteredCategories = categories) {
   const paginated = paginateData(filteredCategories, currentPage, PAGE_SIZE);
   let tableData = paginated.map((c) => ({
@@ -55,38 +58,58 @@ function getTableHtml(filteredCategories = categories) {
   );
 }
 
+//* Handles All event listeners of page
 function setupEventListeners() {
-  document.getElementById("searchCat")?.addEventListener("input", filterCategories);
+  //& Search
+  document
+    .getElementById("searchCat")
+    ?.addEventListener("input", filterCategories);
 
-  document.querySelector("#categoriesTableContainer").addEventListener("click", function (e) {
-    const editBtn = e.target.closest(".edit-btn");
-    const deleteBtn = e.target.closest(".delete-btn");
-    if (editBtn) handleEdit(editBtn.dataset.id);
-    else if (deleteBtn) handleDelete(deleteBtn.dataset.id);
+  document
+    .querySelector("#categoriesTableContainer")
+    .addEventListener("click", function (e) {
+      const editBtn = e.target.closest(".edit-btn");
+      const deleteBtn = e.target.closest(".delete-btn");
 
-    const pageBtn = e.target.closest(".page-link");
-    if (pageBtn) {
-      const page = Number(pageBtn.dataset.page);
-      const totalPages = Math.ceil(lastFiltered.length / PAGE_SIZE);
-      if (page < 1 || page > totalPages) return;
-      currentPage = page;
-      document.getElementById("categoriesTableContainer").innerHTML = getTableHtml(lastFiltered);
-    }
-  });
+      //& handle Update
+      if (editBtn) handleEdit(editBtn.dataset.id);
+      //& handle Deletion
+      else if (deleteBtn) handleDelete(deleteBtn.dataset.id);
 
-  document.querySelector("#categoriesTableContainer").addEventListener("change", (e) => {
-    const pageSizeSelect = e.target.closest(".page-size-select");
-    if (pageSizeSelect) {
-      PAGE_SIZE = Number(pageSizeSelect.value);
-      currentPage = 1;
-      document.getElementById("categoriesTableContainer").innerHTML = getTableHtml(lastFiltered);
-    }
-  });
+      //& handle pagination
+      const pageBtn = e.target.closest(".page-link");
+      if (pageBtn) {
+        const page = Number(pageBtn.dataset.page);
+        const totalPages = Math.ceil(lastFiltered.length / PAGE_SIZE);
+        if (page < 1 || page > totalPages) return;
+        currentPage = page;
+        document.getElementById("categoriesTableContainer").innerHTML =
+          getTableHtml(lastFiltered);
+      }
+    });
 
-  document.querySelector("#addCategoryBtn").addEventListener("click", () => handleAdd());
+  //& Handle Limit
+  document
+    .querySelector("#categoriesTableContainer")
+    .addEventListener("change", (e) => {
+      const pageSizeSelect = e.target.closest(".page-size-select");
+      if (pageSizeSelect) {
+        PAGE_SIZE = Number(pageSizeSelect.value);
+        currentPage = 1;
+        document.getElementById("categoriesTableContainer").innerHTML =
+          getTableHtml(lastFiltered);
+      }
+    });
+
+  //& handle Category Creation
+  document
+    .querySelector("#addCategoryBtn")
+    .addEventListener("click", () => handleAdd());
 }
 
+//* Filter
 function filterCategories() {
+  //^ Search by name or description
   let searchTerm = document.getElementById("searchCat").value.toLowerCase();
   let filtered = categories.filter((c) => {
     return (
@@ -96,23 +119,12 @@ function filterCategories() {
   });
   lastFiltered = filtered;
   currentPage = 1;
-  document.getElementById("categoriesTableContainer").innerHTML = getTableHtml(filtered);
+  document.getElementById("categoriesTableContainer").innerHTML =
+    getTableHtml(filtered);
   updateStats(filtered.length, searchTerm);
 }
 
-function updateStats(count, searchTerm) {
-  let statsDiv = document.getElementById("searchStats");
-  if (!statsDiv) return;
-  statsDiv.innerHTML = searchTerm
-    ? `Found ${count} categor${count !== 1 ? "ies" : "y"} matching "${searchTerm}"`
-    : "";
-}
-
-function getProductsNumber(id) {
-  let count = products.filter((p) => p.categoryId == id).length;
-  return `<span class="badge rounded-pill px-2" style="background:#eff6ff; color:#3b82f6;">${count}</span>`;
-}
-
+//* ADD
 function handleAdd() {
   getModal("categories", "Add", "", async () => {
     await loadData();
@@ -120,6 +132,7 @@ function handleAdd() {
   });
 }
 
+//* UPDATE
 function handleEdit(id) {
   getModal("categories", "Edit", id, async () => {
     await loadData();
@@ -127,6 +140,7 @@ function handleEdit(id) {
   });
 }
 
+//* DELETE
 async function handleDelete(id) {
   let c = categories.find((e) => e.id == id);
   if (!c) return;
@@ -153,4 +167,17 @@ async function handleDelete(id) {
   lastFiltered = [...categories];
   currentPage = 1;
   filterCategories();
+}
+
+function updateStats(count, searchTerm) {
+  let statsDiv = document.getElementById("searchStats");
+  if (!statsDiv) return;
+  statsDiv.innerHTML = searchTerm
+    ? `Found ${count} categor${count !== 1 ? "ies" : "y"} matching "${searchTerm}"`
+    : "";
+}
+
+function getProductsNumber(id) {
+  let count = products.filter((p) => p.categoryId == id).length;
+  return `<span class="badge rounded-pill px-2" style="background:#eff6ff; color:#3b82f6;">${count}</span>`;
 }

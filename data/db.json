@@ -1,4 +1,51 @@
 {
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin User",
+      "email": "admin@trackmaster.com",
+      "password": "admin123",
+      "role": "admin",
+      "createdAt": "2026-01-01T10:00:00Z",
+      "updatedAt": "2026-01-01T10:00:00Z"
+    },
+    {
+      "id": "2",
+      "name": "Sohaila Hesham",
+      "email": "sohaila@trackmaster.com",
+      "password": "sohaila123",
+      "role": "user",
+      "createdAt": "2026-01-15T09:30:00Z",
+      "updatedAt": "2026-01-15T09:30:00Z"
+    },
+    {
+      "id": "3",
+      "name": "Ammar Fayez",
+      "email": "ammar@trackmaster.com",
+      "password": "ammar123",
+      "role": "user",
+      "createdAt": "2026-01-20T14:15:00Z",
+      "updatedAt": "2026-01-20T14:15:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Omar Alsheikh",
+      "email": "omar@trackmaster.com",
+      "password": "omar123",
+      "role": "user",
+      "createdAt": "2026-02-01T11:45:00Z",
+      "updatedAt": "2026-02-01T11:45:00Z"
+    },
+    {
+      "id": "5",
+      "name": "Abdulrahman Siraj",
+      "email": "abdulrahman@trackmaster.com",
+      "password": "abdulrahman123",
+      "role": "admin",
+      "createdAt": "2026-02-10T08:20:00Z",
+      "updatedAt": "2026-02-10T08:20:00Z"
+    }
+  ],
   "products": [
     {
       "id": "1",
@@ -10,7 +57,9 @@
       "quantity": 8,
       "reorderLevel": 5,
       "unit": "pcs",
-      "description": "Professional 14-inch laptop"
+      "description": "Professional 14-inch laptop",
+      "createdAt": "2026-01-05T10:00:00Z",
+      "updatedAt": "2026-03-16T13:00:00Z"
     },
     {
       "id": "2",
@@ -19,10 +68,12 @@
       "categoryId": 1,
       "supplierId": 1,
       "price": 850,
-      "quantity": 3,
+      "quantity": 33,
       "reorderLevel": 10,
       "unit": "pcs",
-      "description": "Wireless optical mouse"
+      "description": "Wireless optical mouse",
+      "createdAt": "2026-01-10T11:30:00Z",
+      "updatedAt": "2026-03-31T13:37:38.589Z"
     },
     {
       "id": "3",
@@ -31,10 +82,12 @@
       "categoryId": 2,
       "supplierId": 2,
       "price": 3500,
-      "quantity": 12,
+      "quantity": 22,
       "reorderLevel": 5,
       "unit": "pcs",
-      "description": "Ergonomic office chair"
+      "description": "Ergonomic office chair",
+      "createdAt": "2026-01-12T09:15:00Z",
+      "updatedAt": "2026-01-12T09:15:00Z"
     },
     {
       "id": "4",
@@ -46,19 +99,9 @@
       "quantity": 2,
       "reorderLevel": 20,
       "unit": "ream",
-      "description": "A4 paper - 500 sheets"
-    },
-    {
-      "id": "5",
-      "name": "USB-C Hub",
-      "sku": "UC-005",
-      "categoryId": 1,
-      "supplierId": 1,
-      "price": 1200,
-      "quantity": 15,
-      "reorderLevel": 8,
-      "unit": "pcs",
-      "description": "7-in-1 USB-C hub"
+      "description": "A4 paper - 500 sheets",
+      "createdAt": "2026-01-15T14:20:00Z",
+      "updatedAt": "2026-03-14T10:00:00Z"
     },
     {
       "id": "6",
@@ -70,7 +113,9 @@
       "quantity": 4,
       "reorderLevel": 5,
       "unit": "pcs",
-      "description": "24-inch Full HD monitor"
+      "description": "24-inch Full HD monitor",
+      "createdAt": "2026-01-20T08:45:00Z",
+      "updatedAt": "2026-03-16T13:00:00Z"
     },
     {
       "id": "7",
@@ -79,10 +124,12 @@
       "categoryId": 2,
       "supplierId": 2,
       "price": 8500,
-      "quantity": 6,
+      "quantity": 11,
       "reorderLevel": 3,
       "unit": "pcs",
-      "description": "Electric height-adjustable desk"
+      "description": "Electric height-adjustable desk",
+      "createdAt": "2026-01-22T10:30:00Z",
+      "updatedAt": "2026-01-22T10:30:00Z"
     },
     {
       "id": "8",
@@ -94,7 +141,9 @@
       "quantity": 1,
       "reorderLevel": 5,
       "unit": "set",
-      "description": "4-color printer ink set"
+      "description": "4-color printer ink set",
+      "createdAt": "2026-01-25T13:15:00Z",
+      "updatedAt": "2026-03-12T14:30:00Z"
     },
     {
       "id": "9",
@@ -106,7 +155,9 @@
       "quantity": 7,
       "reorderLevel": 5,
       "unit": "pcs",
-      "description": "Mechanical gaming keyboard"
+      "description": "Mechanical gaming keyboard",
+      "createdAt": "2026-01-28T11:00:00Z",
+      "updatedAt": "2026-01-28T11:00:00Z"
     },
     {
       "id": "10",
@@ -118,7 +169,9 @@
       "quantity": 0,
       "reorderLevel": 4,
       "unit": "pcs",
-      "description": "LED adjustable desk lamp"
+      "description": "LED adjustable desk lamp",
+      "createdAt": "2026-02-01T09:30:00Z",
+      "updatedAt": "2026-03-17T11:00:00Z"
     },
     {
       "id": "11",
@@ -127,10 +180,11 @@
       "categoryId": 3,
       "supplierId": 3,
       "price": 85,
-      "quantity": 18,
+      "quantity": 24,
       "reorderLevel": 5,
       "unit": "pcs",
-      "description": "Heavy duty stapler"
+      "createdAt": "2026-02-05T14:45:00Z",
+      "updatedAt": "2026-03-22T12:00:00Z"
     },
     {
       "id": "12",
@@ -142,19 +196,9 @@
       "quantity": 9,
       "reorderLevel": 4,
       "unit": "pcs",
-      "description": "1080p HD webcam with microphone"
-    },
-    {
-      "id": "13",
-      "name": "Bookshelf",
-      "sku": "BS-013",
-      "categoryId": 2,
-      "supplierId": 2,
-      "price": 2200,
-      "quantity": 3,
-      "reorderLevel": 2,
-      "unit": "pcs",
-      "description": "5-shelf wooden bookshelf"
+      "description": "1080p HD webcam with microphone",
+      "createdAt": "2026-02-08T10:20:00Z",
+      "updatedAt": "2026-02-08T10:20:00Z"
     },
     {
       "id": "14",
@@ -163,10 +207,12 @@
       "categoryId": 3,
       "supplierId": 3,
       "price": 60,
-      "quantity": 2,
+      "quantity": 12,
       "reorderLevel": 15,
       "unit": "box",
-      "description": "Dry erase markers - 12 pack"
+      "description": "Dry erase markers - 12 pack",
+      "createdAt": "2026-02-12T12:00:00Z",
+      "updatedAt": "2026-03-22T12:00:00Z"
     },
     {
       "id": "15",
@@ -178,34 +224,108 @@
       "quantity": 11,
       "reorderLevel": 5,
       "unit": "pcs",
-      "description": "Adjustable aluminum laptop stand"
+      "description": "Adjustable aluminum laptop stand",
+      "createdAt": "2026-02-15T08:30:00Z",
+      "updatedAt": "2026-03-20T14:00:00Z"
+    },
+    {
+      "id": "16",
+      "name": "laptop-pro-16",
+      "sku": "LP-020",
+      "categoryId": 1,
+      "supplierId": 1,
+      "price": 50000,
+      "quantity": 0,
+      "reorderLevel": 20,
+      "unit": "pcs",
+      "createdAt": "2026-03-29T20:09:44.917Z",
+      "updatedAt": "2026-03-29T20:26:33.270Z"
+    },
+    {
+      "name": "Laptop-17-pro",
+      "sku": "LP-021",
+      "categoryId": "1",
+      "supplierId": "1",
+      "price": "50000",
+      "quantity": "20",
+      "reorderLevel": "15",
+      "unit": "pcs",
+      "updatedAt": "2026-03-31T13:40:11.680Z",
+      "id": "17"
+    },
+    {
+      "name": "Red Dress",
+      "sku": "RD-001",
+      "categoryId": "4",
+      "supplierId": "4",
+      "price": "500",
+      "quantity": "10",
+      "reorderLevel": "5",
+      "unit": "box",
+      "updatedAt": "2026-03-31T13:39:51.187Z",
+      "id": "18"
+    },
+    {
+      "id": "df4a",
+      "name": "Blue T-shirt",
+      "sku": "BT-201",
+      "categoryId": "4",
+      "supplierId": "4",
+      "price": "1000",
+      "quantity": 5,
+      "reorderLevel": "5",
+      "unit": "box",
+      "createdAt": "2026-03-31T13:39:41.135Z",
+      "updatedAt": "2026-03-31T13:46:15.883Z"
     }
   ],
   "categories": [
     {
       "id": "1",
       "name": "Electronics",
-      "description": "Electronic devices and accessories"
+      "description": "Electronic devices and accessories",
+      "createdAt": "2026-01-01T08:00:00Z",
+      "updatedAt": "2026-01-01T08:00:00Z"
     },
     {
       "id": "2",
       "name": "Furniture",
-      "description": "Office and home furniture"
+      "description": "Office and home furniture",
+      "createdAt": "2026-01-01T08:00:00Z",
+      "updatedAt": "2026-01-01T08:00:00Z"
     },
     {
       "id": "3",
       "name": "Stationery",
-      "description": "Office supplies and paper products"
+      "description": "Office supplies and paper products",
+      "createdAt": "2026-01-01T08:00:00Z",
+      "updatedAt": "2026-01-01T08:00:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Clothes",
+      "description": "Everything human wears",
+      "createdAt": "2026-02-01T10:00:00Z",
+      "updatedAt": "2026-02-01T10:00:00Z"
+    },
+    {
+      "id": "0a20",
+      "name": "food",
+      "description": "Everything human eats",
+      "createdAt": "2026-03-31T13:13:58.005Z",
+      "updatedAt": "2026-03-31T13:13:58.005Z"
     }
   ],
   "suppliers": [
     {
+      "id": "1",
       "name": "TechWorld Egypt",
       "contact": "Ahmed Karim",
       "email": "sales@techworld.eg",
       "phone": "+20 100 123 4567",
-      "address": "undefined",
-      "id": "1"
+      "address": "Cairo, Egypt",
+      "createdAt": "2026-01-01T09:00:00Z",
+      "updatedAt": "2026-01-01T09:00:00Z"
     },
     {
       "id": "2",
@@ -213,7 +333,9 @@
       "contact": "Sara Nour",
       "email": "info@cairofurnish.com",
       "phone": "+20 111 987 6543",
-      "address": "Giza, Egypt"
+      "address": "Giza, Egypt",
+      "createdAt": "2026-01-05T10:30:00Z",
+      "updatedAt": "2026-01-05T10:30:00Z"
     },
     {
       "id": "3",
@@ -221,16 +343,28 @@
       "contact": "Mohamed Ali",
       "email": "orders@deltaoffice.eg",
       "phone": "+20 122 456 7890",
-      "address": "Alexandria, Egypt"
+      "address": "Alexandria, Egypt",
+      "createdAt": "2026-01-10T11:15:00Z",
+      "updatedAt": "2026-01-10T11:15:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Shein",
+      "contact": "Sohaila Hesham",
+      "email": "sohaila.hesham456@gmail.com",
+      "phone": "+201060689680",
+      "address": "Teraa, st",
+      "createdAt": "2026-02-01T14:00:00Z",
+      "updatedAt": "2026-02-01T14:00:00Z"
     }
   ],
   "orders": [
     {
       "id": "1",
       "supplierId": 1,
-      "orderDate": "2025-03-20T10:00:00Z",
-      "expectedDate": "2025-03-27T10:00:00Z",
-      "status": "pending",
+      "orderDate": "2026-03-20T10:00:00Z",
+      "expectedDate": "2026-03-27T10:00:00Z",
+      "status": "received",
       "items": [
         {
           "productId": 2,
@@ -241,14 +375,16 @@
         }
       ],
       "totalAmount": 15000,
-      "notes": "Urgent order"
+      "notes": "Urgent order",
+      "createdAt": "2026-03-20T10:00:00Z",
+      "updatedAt": "2026-03-31T13:37:38.575Z"
     },
     {
       "id": "2",
       "supplierId": 3,
-      "orderDate": "2025-03-10T09:00:00Z",
-      "expectedDate": "2025-03-15T09:00:00Z",
-      "receivedDate": "2025-03-12T14:30:00Z",
+      "orderDate": "2026-03-10T09:00:00Z",
+      "expectedDate": "2026-03-15T09:00:00Z",
+      "receivedDate": "2026-03-12T14:30:00Z",
       "status": "received",
       "items": [
         {
@@ -260,14 +396,16 @@
         }
       ],
       "totalAmount": 5500,
-      "notes": "10% discount applied"
+      "notes": "10% discount applied",
+      "createdAt": "2026-03-10T09:00:00Z",
+      "updatedAt": "2026-03-12T14:30:00Z"
     },
     {
       "id": "3",
       "supplierId": 2,
-      "orderDate": "2025-03-22T11:00:00Z",
-      "expectedDate": "2025-03-29T11:00:00Z",
-      "status": "pending",
+      "orderDate": "2026-03-22T11:00:00Z",
+      "expectedDate": "2026-03-29T11:00:00Z",
+      "status": "received",
       "items": [
         {
           "productId": 3,
@@ -284,13 +422,15 @@
           "total": 40000
         }
       ],
-      "totalAmount": 72000
+      "totalAmount": 72000,
+      "createdAt": "2026-03-22T11:00:00Z",
+      "updatedAt": "2026-03-22T11:00:00Z"
     },
     {
       "id": "4",
       "supplierId": 1,
-      "orderDate": "2025-03-25T08:00:00Z",
-      "expectedDate": "2025-04-01T08:00:00Z",
+      "orderDate": "2026-03-25T08:00:00Z",
+      "expectedDate": "2026-04-01T08:00:00Z",
       "status": "pending",
       "items": [
         {
@@ -308,14 +448,16 @@
           "total": 16000
         }
       ],
-      "totalAmount": 73500
+      "totalAmount": 73500,
+      "createdAt": "2026-03-25T08:00:00Z",
+      "updatedAt": "2026-03-25T08:00:00Z"
     },
     {
       "id": "5",
       "supplierId": 3,
-      "orderDate": "2025-03-18T10:00:00Z",
-      "expectedDate": "2025-03-23T10:00:00Z",
-      "receivedDate": "2025-03-22T12:00:00Z",
+      "orderDate": "2026-03-18T10:00:00Z",
+      "expectedDate": "2026-03-23T10:00:00Z",
+      "receivedDate": "2026-03-22T12:00:00Z",
       "status": "received",
       "items": [
         {
@@ -333,7 +475,25 @@
           "total": 1650
         }
       ],
-      "totalAmount": 3250
+      "totalAmount": 3250,
+      "createdAt": "2026-03-18T10:00:00Z",
+      "updatedAt": "2026-03-22T12:00:00Z"
+    },
+    {
+      "id": "6",
+      "supplierId": 4,
+      "expectedDate": "2026-03-31T00:00:00Z",
+      "items": [
+        {
+          "productId": 18,
+          "productName": "Red Dress",
+          "quantity": 30
+        }
+      ],
+      "status": "pending",
+      "orderDate": "2026-03-29T00:00:00Z",
+      "createdAt": "2026-03-29T20:25:32.106Z",
+      "updatedAt": "2026-03-29T20:25:32.106Z"
     }
   ],
   "stockAdjustments": [
@@ -344,9 +504,11 @@
       "type": "decrease",
       "quantity": 3,
       "reason": "Damaged goods",
-      "date": "2025-03-12T14:30:00Z",
+      "date": "2026-03-12T14:30:00Z",
       "oldQuantity": 4,
-      "newQuantity": 1
+      "newQuantity": 1,
+      "createdAt": "2026-03-12T14:30:00Z",
+      "updatedAt": "2026-03-12T14:30:00Z"
     },
     {
       "id": "2",
@@ -355,9 +517,11 @@
       "type": "decrease",
       "quantity": 15,
       "reason": "Theft/Loss",
-      "date": "2025-03-14T10:00:00Z",
+      "date": "2026-03-14T10:00:00Z",
       "oldQuantity": 17,
-      "newQuantity": 2
+      "newQuantity": 2,
+      "createdAt": "2026-03-14T10:00:00Z",
+      "updatedAt": "2026-03-14T10:00:00Z"
     },
     {
       "id": "3",
@@ -366,9 +530,11 @@
       "type": "increase",
       "quantity": 10,
       "reason": "Inventory count adjustment",
-      "date": "2025-03-15T09:00:00Z",
+      "date": "2026-03-15T09:00:00Z",
       "oldQuantity": 3,
-      "newQuantity": 13
+      "newQuantity": 13,
+      "createdAt": "2026-03-15T09:00:00Z",
+      "updatedAt": "2026-03-15T09:00:00Z"
     },
     {
       "id": "4",
@@ -377,9 +543,11 @@
       "type": "decrease",
       "quantity": 2,
       "reason": "Damaged during transport",
-      "date": "2025-03-17T11:00:00Z",
+      "date": "2026-03-17T11:00:00Z",
       "oldQuantity": 2,
-      "newQuantity": 0
+      "newQuantity": 0,
+      "createdAt": "2026-03-17T11:00:00Z",
+      "updatedAt": "2026-03-17T11:00:00Z"
     },
     {
       "id": "5",
@@ -388,9 +556,11 @@
       "type": "decrease",
       "quantity": 10,
       "reason": "Used in office",
-      "date": "2025-03-19T09:30:00Z",
-      "oldQuantity": 12,
-      "newQuantity": 2
+      "date": "2026-03-19T09:30:00Z",
+      "oldQuantity": 22,
+      "newQuantity": 12,
+      "createdAt": "2026-03-19T09:30:00Z",
+      "updatedAt": "2026-03-19T09:30:00Z"
     },
     {
       "id": "6",
@@ -399,9 +569,37 @@
       "type": "increase",
       "quantity": 5,
       "reason": "Found in storage",
-      "date": "2025-03-20T14:00:00Z",
+      "date": "2026-03-20T14:00:00Z",
       "oldQuantity": 6,
-      "newQuantity": 11
+      "newQuantity": 11,
+      "createdAt": "2026-03-20T14:00:00Z",
+      "updatedAt": "2026-03-20T14:00:00Z"
+    },
+    {
+      "id": "7",
+      "productId": 16,
+      "productName": "laptop-pro-16",
+      "type": "decrease",
+      "quantity": 5,
+      "reason": "Damaged goods",
+      "date": "2026-03-29T20:26:33.270Z",
+      "oldQuantity": 5,
+      "newQuantity": 0,
+      "createdAt": "2026-03-29T20:26:33.270Z",
+      "updatedAt": "2026-03-29T20:26:33.270Z"
+    },
+    {
+      "id": "ec75",
+      "productId": "df4a",
+      "productName": "Blue T-shirt",
+      "type": "decrease",
+      "quantity": 5,
+      "reason": "Theft/Loss",
+      "date": "2026-03-31T13:46:15.875Z",
+      "oldQuantity": 10,
+      "newQuantity": 5,
+      "createdAt": "2026-03-31T13:46:15.875Z",
+      "updatedAt": "2026-03-31T13:46:15.875Z"
     }
   ],
   "activityLog": [
@@ -410,105 +608,124 @@
       "action": "CREATE_PRODUCT",
       "details": "New product added: Laptop Pro 14\" (SKU: LP-001)",
       "user": "admin",
-      "timestamp": "2025-03-10T09:00:00Z"
+      "timestamp": "2026-03-10T09:00:00Z",
+      "createdAt": "2026-03-10T09:00:00Z"
     },
     {
       "id": "2",
       "action": "RECEIVE_ORDER",
       "details": "Purchase Order #2 received - Added 50x A4 Paper Ream to stock",
       "user": "admin",
-      "timestamp": "2025-03-10T11:00:00Z"
+      "timestamp": "2026-03-10T11:00:00Z",
+      "createdAt": "2026-03-10T11:00:00Z"
     },
     {
       "id": "3",
       "action": "STOCK_ADJUSTMENT",
       "details": "Stock adjustment: -3 Printer Ink Set (Reason: Damaged goods)",
       "user": "admin",
-      "timestamp": "2025-03-12T14:30:00Z"
+      "timestamp": "2026-03-12T14:30:00Z",
+      "createdAt": "2026-03-12T14:30:00Z"
     },
     {
       "id": "4",
       "action": "STOCK_ADJUSTMENT",
       "details": "Stock adjustment: -15 A4 Paper Ream (Reason: Theft/Loss)",
       "user": "admin",
-      "timestamp": "2025-03-14T10:00:00Z"
+      "timestamp": "2026-03-14T10:00:00Z",
+      "createdAt": "2026-03-14T10:00:00Z"
     },
     {
       "id": "5",
       "action": "LOW_STOCK_ALERT",
       "details": "Low stock alert: A4 Paper Ream (Quantity: 2, Reorder level: 20)",
       "user": "system",
-      "timestamp": "2025-03-14T10:05:00Z"
+      "timestamp": "2026-03-14T10:05:00Z",
+      "createdAt": "2026-03-14T10:05:00Z"
     },
     {
-      "id": "6",
-      "action": "LOW_STOCK_ALERT",
-      "details": "Low stock alert: Wireless Mouse (Quantity: 3, Reorder level: 10)",
-      "user": "system",
-      "timestamp": "2025-03-14T10:05:00Z"
-    },
-    {
-      "id": "7",
-      "action": "STOCK_ADJUSTMENT",
-      "details": "Stock adjustment: +10 Wireless Mouse (Reason: Inventory count adjustment)",
+      "id": "b9f2",
+      "action": "CREATE_PRODUCT",
+      "details": "New product added: Blue T-shirt (BT-201)",
       "user": "admin",
-      "timestamp": "2025-03-15T09:00:00Z"
+      "timestamp": "2026-03-31T13:39:41.148Z",
+      "createdAt": "2026-03-31T13:39:41.148Z",
+      "updatedAt": "2026-03-31T13:39:41.148Z"
     },
     {
-      "id": "8",
+      "id": "6a78",
       "action": "UPDATE_PRODUCT",
-      "details": "Product updated: Monitor 24\" - Price changed from 12500 to 12000",
+      "details": "Product updated: Red Dress (RD-001)",
       "user": "admin",
-      "timestamp": "2025-03-16T13:00:00Z"
+      "timestamp": "2026-03-31T13:39:51.195Z",
+      "createdAt": "2026-03-31T13:39:51.195Z",
+      "updatedAt": "2026-03-31T13:39:51.195Z"
     },
     {
-      "id": "9",
-      "action": "LOW_STOCK_ALERT",
-      "details": "Low stock alert: Printer Ink Set (Quantity: 1, Reorder level: 5)",
-      "user": "system",
-      "timestamp": "2025-03-16T13:05:00Z"
+      "id": "3b78",
+      "action": "UPDATE_PRODUCT",
+      "details": "Product updated: Laptop-17-pro (LP-021)",
+      "user": "admin",
+      "timestamp": "2026-03-31T13:40:11.779Z",
+      "createdAt": "2026-03-31T13:40:11.779Z",
+      "updatedAt": "2026-03-31T13:40:11.779Z"
     },
     {
-      "id": "10",
+      "id": "8164",
       "action": "STOCK_ADJUSTMENT",
-      "details": "Stock adjustment: -2 Desk Lamp (Reason: Damaged during transport)",
+      "details": "Stock adjustment: −5 Blue T-shirt (Theft/Loss)",
       "user": "admin",
-      "timestamp": "2025-03-17T11:00:00Z"
+      "timestamp": "2026-03-31T13:46:15.875Z",
+      "createdAt": "2026-03-31T13:46:15.892Z",
+      "updatedAt": "2026-03-31T13:46:15.892Z"
     },
     {
-      "id": "11",
-      "action": "CREATE_PURCHASE_ORDER",
-      "details": "Purchase Order #3 created for supplier: Cairo Furnish - Amount: 72000",
-      "user": "admin",
-      "timestamp": "2025-03-22T11:00:00Z"
+      "id": "b091",
+      "message": "User Admin User logged in",
+      "time": "31/03/2026, 16:11:06",
+      "user": "Admin User",
+      "createdAt": "2026-03-31T14:11:06.865Z",
+      "updatedAt": "2026-03-31T14:11:06.865Z"
     },
     {
-      "id": "12",
-      "action": "RECEIVE_ORDER",
-      "details": "Purchase Order #5 received - Added 20x Stapler and 30x Whiteboard Markers",
-      "user": "admin",
-      "timestamp": "2025-03-22T12:00:00Z"
+      "id": "84f1",
+      "message": "User Admin User logged out",
+      "time": "31/03/2026, 16:11:13",
+      "user": "Admin User",
+      "createdAt": "2026-03-31T14:11:13.353Z",
+      "updatedAt": "2026-03-31T14:11:13.353Z"
     },
     {
-      "id": "13",
-      "action": "CREATE_PURCHASE_ORDER",
-      "details": "Purchase Order #4 created for supplier: TechWorld Egypt - Amount: 73500",
-      "user": "admin",
-      "timestamp": "2025-03-25T08:00:00Z"
+      "id": "ccfb",
+      "message": "User Sohaila Hesham logged in",
+      "time": "31/03/2026, 16:11:38",
+      "user": "Sohaila Hesham",
+      "createdAt": "2026-03-31T14:11:38.059Z",
+      "updatedAt": "2026-03-31T14:11:38.059Z"
     },
     {
-      "id": "14",
-      "action": "STOCK_ADJUSTMENT",
-      "details": "Stock adjustment: +5 Laptop Stand (Reason: Found in storage)",
-      "user": "admin",
-      "timestamp": "2025-03-20T14:00:00Z"
+      "id": "02aa",
+      "message": "User Sohaila Hesham logged out",
+      "time": "31/03/2026, 16:12:24",
+      "user": "Sohaila Hesham",
+      "createdAt": "2026-03-31T14:12:24.592Z",
+      "updatedAt": "2026-03-31T14:12:24.592Z"
     },
     {
-      "id": "15",
-      "action": "DELETE_PRODUCT",
-      "details": "Product deleted: Old Printer (SKU: OP-000)",
-      "user": "admin",
-      "timestamp": "2025-03-21T10:00:00Z"
+      "id": "ac67",
+      "message": "User Sohaila Hesham logged in",
+      "time": "31/03/2026, 16:13:20",
+      "user": "Sohaila Hesham",
+      "createdAt": "2026-03-31T14:13:20.211Z",
+      "updatedAt": "2026-03-31T14:13:20.211Z"
+    },
+    {
+      "id": "0cbd",
+      "message": "User Sohaila Hesham logged out",
+      "time": "31/03/2026, 16:24:37",
+      "user": "Sohaila Hesham",
+      "createdAt": "2026-03-31T14:24:37.481Z",
+      "updatedAt": "2026-03-31T14:24:37.481Z"
     }
   ],
   "lowStockAlerts": [
@@ -519,18 +736,22 @@
       "sku": "PA-004",
       "currentQuantity": 2,
       "reorderLevel": 20,
-      "date": "2025-03-14T10:05:00Z",
-      "status": "active"
+      "date": "2026-03-14T10:05:00Z",
+      "status": "active",
+      "createdAt": "2026-03-14T10:05:00Z",
+      "updatedAt": "2026-03-14T10:05:00Z"
     },
     {
       "id": "2",
       "productId": 2,
       "productName": "Wireless Mouse",
       "sku": "WM-002",
-      "currentQuantity": 3,
+      "currentQuantity": 13,
       "reorderLevel": 10,
-      "date": "2025-03-14T10:05:00Z",
-      "status": "resolved"
+      "date": "2026-03-14T10:05:00Z",
+      "status": "resolved",
+      "createdAt": "2026-03-14T10:05:00Z",
+      "updatedAt": "2026-03-15T09:00:00Z"
     },
     {
       "id": "3",
@@ -539,8 +760,10 @@
       "sku": "PI-008",
       "currentQuantity": 1,
       "reorderLevel": 5,
-      "date": "2025-03-16T13:05:00Z",
-      "status": "active"
+      "date": "2026-03-16T13:05:00Z",
+      "status": "active",
+      "createdAt": "2026-03-16T13:05:00Z",
+      "updatedAt": "2026-03-16T13:05:00Z"
     },
     {
       "id": "4",
@@ -549,18 +772,22 @@
       "sku": "DL-010",
       "currentQuantity": 0,
       "reorderLevel": 4,
-      "date": "2025-03-17T11:05:00Z",
-      "status": "active"
+      "date": "2026-03-17T11:05:00Z",
+      "status": "active",
+      "createdAt": "2026-03-17T11:05:00Z",
+      "updatedAt": "2026-03-17T11:05:00Z"
     },
     {
       "id": "5",
       "productId": 14,
       "productName": "Whiteboard Markers",
       "sku": "WM-014",
-      "currentQuantity": 2,
+      "currentQuantity": 12,
       "reorderLevel": 15,
-      "date": "2025-03-19T09:35:00Z",
-      "status": "active"
+      "date": "2026-03-19T09:35:00Z",
+      "status": "resolved",
+      "createdAt": "2026-03-19T09:35:00Z",
+      "updatedAt": "2026-03-22T12:00:00Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
