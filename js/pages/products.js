@@ -7,7 +7,7 @@ import {
   deleteData,
 } from "../services/api.js";
 import { getModal } from "../components/modal.js";
-import { GetCurrentDate } from "../utils/helpers.js";
+import { GetCurrentDate, sortData } from "../utils/helpers.js";
 
 let products = [];
 let categories = [];
@@ -25,10 +25,12 @@ export async function loadProducts() {
 
 async function loadData() {
   products = await fetchData("products");
+  products = sortData(products);
   categories = await fetchData("categories");
   suppliers = await fetchData("suppliers");
 }
 
+//* render the whole html of Products page
 function renderProducts() {
   let categoryOptions = categories
     .map((c) => `<option value="${c.id}">${c.name}</option>`)
@@ -64,6 +66,7 @@ function renderProducts() {
   document.getElementById("pageContent").innerHTML = html;
 }
 
+//* to bring the table whatever there is a filter/ search/ all products
 function getTableHtml(filteredProducts = products) {
   const paginated = paginateData(filteredProducts, currentPage, PAGE_SIZE);
   let tableData = paginated.map((p) => ({
@@ -91,13 +94,17 @@ function getTableHtml(filteredProducts = products) {
   );
 }
 
+//* Handles All event listeners of page
 function setupEventListeners() {
+  //& Search
   document
     .getElementById("searchProd")
     ?.addEventListener("input", filterProducts);
+  //& Category Filter
   document
     .getElementById("categoryFilter")
     ?.addEventListener("change", filterProducts);
+  //& Status Filter
   document
     .getElementById("statusFilter")
     ?.addEventListener("change", filterProducts);
@@ -105,6 +112,7 @@ function setupEventListeners() {
   document
     .querySelector("#productsTableContainer")
     .addEventListener("click", function (e) {
+      //& pagination
       const pageBtn = e.target.closest(".page-link");
       if (pageBtn) {
         const page = Number(pageBtn.dataset.page);
@@ -121,6 +129,7 @@ function setupEventListeners() {
       else if (deleteBtn) handleDelete(deleteBtn.dataset.id);
     });
 
+  //& Limit
   document
     .querySelector("#productsTableContainer")
     .addEventListener("change", (e) => {
@@ -132,18 +141,20 @@ function setupEventListeners() {
           getTableHtml(lastFiltered);
       }
     });
-
+  //& Add product
   document
     .querySelector("#addProductBtn")
     .addEventListener("click", () => handleAdd());
 }
 
+//* Filter function for search and filters
 function filterProducts() {
   let searchTerm = document.getElementById("searchProd").value.toLowerCase();
   let categoryId = document.getElementById("categoryFilter").value;
   let statusFilter = document.getElementById("statusFilter").value;
 
   let filtered = products.filter((p) => {
+    //^ Search by name, sku, category name or supplier name
     if (searchTerm) {
       let matches =
         p.name.toLowerCase().includes(searchTerm)
@@ -152,7 +163,9 @@ function filterProducts() {
         || getSupplierName(p.supplierId).toLowerCase().includes(searchTerm);
       if (!matches) return false;
     }
+    //^ Filter by category
     if (categoryId && p.categoryId != categoryId) return false;
+    //^ Filter by status
     if (statusFilter) {
       if (statusFilter === "out" && p.quantity > 0) return false;
       if (
@@ -171,6 +184,47 @@ function filterProducts() {
   document.getElementById("productsTableContainer").innerHTML =
     getTableHtml(filtered);
   updateStats(filtered.length, searchTerm, categoryId, statusFilter);
+}
+
+//* ADD
+function handleAdd() {
+  getModal("products", "Add", "", async () => {
+    await loadData();
+    lastFiltered = [...products];
+    filterProducts();
+  });
+}
+
+//* UPDATE
+function handleEdit(id) {
+  getModal("products", "Edit", id, async () => {
+    await loadData();
+    lastFiltered = [...products];
+    filterProducts();
+  });
+}
+
+//* DELETE
+async function handleDelete(id) {
+  let p = products.find((e) => e.id == id);
+  if (!p) return;
+
+  let ok = confirm(`Delete product "${p.name}"?`);
+  if (!ok) return;
+
+  await deleteData("products", id);
+
+  await postData("activityLog", {
+    action: "DELETE_PRODUCT",
+    details: `Product deleted: ${p.name} (${p.sku})`,
+    user: "admin",
+    timestamp: GetCurrentDate(),
+  });
+
+  await loadData();
+  lastFiltered = [...products];
+  currentPage = 1;
+  filterProducts();
 }
 
 function updateStats(count, searchTerm, categoryId, statusFilter) {
@@ -196,42 +250,4 @@ function getStatus(quantity, reorderLevel) {
   else if (quantity <= Number(reorderLevel))
     return `<span class="status-badge status-low">Low stock</span>`;
   else return `<span class="status-badge status-in">In stock</span>`;
-}
-
-function handleAdd() {
-  getModal("products", "Add", "", async () => {
-    await loadData();
-    lastFiltered = [...products];
-    filterProducts();
-  });
-}
-
-function handleEdit(id) {
-  getModal("products", "Edit", id, async () => {
-    await loadData();
-    lastFiltered = [...products];
-    filterProducts();
-  });
-}
-
-async function handleDelete(id) {
-  let p = products.find((e) => e.id == id);
-  if (!p) return;
-
-  let ok = confirm(`Delete product "${p.name}"?`);
-  if (!ok) return;
-
-  await deleteData("products", id);
-
-  await postData("activityLog", {
-    action: "DELETE_PRODUCT",
-    details: `Product deleted: ${p.name} (${p.sku})`,
-    user: "admin",
-    timestamp: GetCurrentDate(),
-  });
-
-  await loadData();
-  lastFiltered = [...products];
-  currentPage = 1;
-  filterProducts();
 }

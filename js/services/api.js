@@ -15,7 +15,11 @@ export async function postData(endpoint, data) {
     const response = await fetch(`${API_URL}/${endpoint}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        ...data,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      }),
     });
     return await response.json();
   } catch (error) {
@@ -29,7 +33,7 @@ export async function updateData(endpoint, id, data) {
     const response = await fetch(`${API_URL}/${endpoint}/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, updatedAt: new Date().toISOString() }),
     });
     return await response.json();
   } catch (error) {
