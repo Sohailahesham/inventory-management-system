@@ -141,7 +141,7 @@ export async function makeSupplierForm(id) {
     <div class="row mb-3">
       <div class="col-6">
         <label class="text-secondary" class="form-label" for="address">Address *</label>
-        <input type="text" class="form-control" name="address" placeholder="e.g Alexandria, Egypt" value= "${id ? supplier.adress : ""}" >
+        <input type="text" class="form-control" name="address" placeholder="e.g Alexandria, Egypt" value= "${id ? supplier.address : ""}" >
         <div class="text-danger fw-bold errorMes errorMes-address"></div>
       </div>
     </div>
@@ -222,9 +222,10 @@ export async function makeStockAdjustmentForm() {
     .map((p) => {
       const qty = Number(p.quantity) || 0;
       const unit = escAttr(p.unit || "");
-      const reorder = p.reorderLevel !== undefined && p.reorderLevel !== ""
-        ? escAttr(String(p.reorderLevel))
-        : "";
+      const reorder =
+        p.reorderLevel !== undefined && p.reorderLevel !== ""
+          ? escAttr(String(p.reorderLevel))
+          : "";
       return `<option value="${p.id}" data-qty="${qty}" data-unit="${unit}" data-reorder="${reorder}">${p.name} (Qty: ${qty})</option>`;
     })
     .join("");

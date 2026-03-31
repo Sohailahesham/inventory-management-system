@@ -38,7 +38,7 @@ function renderProducts() {
 
   let html = `
       <div class="mb-3 p-3 bg-white rounded border">
-      <div class="d-flex align-items-center gap-2 flex-wrap">
+      <div class="d-flex align-items-center gap-2 flex-wrap page-filter-bar">
         <i class="bi bi-search text-muted d-none d-sm-block"></i>
         <input type="text" id="searchProd" placeholder="Search products..."
           class="form-control form-control-sm border-0 shadow-none" style="flex:1; min-width:150px;">

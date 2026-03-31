@@ -272,11 +272,37 @@
       "categoryId": "4",
       "supplierId": "4",
       "price": "1000",
-      "quantity": 5,
+      "quantity": 10,
       "reorderLevel": "5",
       "unit": "box",
       "createdAt": "2026-03-31T13:39:41.135Z",
-      "updatedAt": "2026-03-31T13:46:15.883Z"
+      "updatedAt": "2026-03-31T21:28:53.618Z"
+    },
+    {
+      "id": "5814",
+      "name": "Yellow Pants",
+      "sku": "YP-020",
+      "categoryId": "4",
+      "supplierId": "4",
+      "price": "500",
+      "quantity": 14,
+      "reorderLevel": "10",
+      "unit": "box",
+      "createdAt": "2026-03-31T20:32:31.407Z",
+      "updatedAt": "2026-03-31T21:28:53.611Z"
+    },
+    {
+      "id": "4275",
+      "name": "new clothes",
+      "sku": "NC-100",
+      "categoryId": "4",
+      "supplierId": "4",
+      "price": "1000",
+      "quantity": "10",
+      "reorderLevel": "5",
+      "unit": "box",
+      "createdAt": "2026-03-31T21:18:25.158Z",
+      "updatedAt": "2026-03-31T21:18:25.158Z"
     }
   ],
   "categories": [
@@ -302,30 +328,21 @@
       "updatedAt": "2026-01-01T08:00:00Z"
     },
     {
-      "id": "4",
-      "name": "Clothes",
+      "name": "Clothess",
       "description": "Everything human wears",
-      "createdAt": "2026-02-01T10:00:00Z",
-      "updatedAt": "2026-02-01T10:00:00Z"
-    },
-    {
-      "id": "0a20",
-      "name": "food",
-      "description": "Everything human eats",
-      "createdAt": "2026-03-31T13:13:58.005Z",
-      "updatedAt": "2026-03-31T13:13:58.005Z"
+      "updatedAt": "2026-03-31T21:34:30.963Z",
+      "id": "4"
     }
   ],
   "suppliers": [
     {
-      "id": "1",
       "name": "TechWorld Egypt",
-      "contact": "Ahmed Karim",
+      "contact": "Ahmed Karam",
       "email": "sales@techworld.eg",
       "phone": "+20 100 123 4567",
       "address": "Cairo, Egypt",
-      "createdAt": "2026-01-01T09:00:00Z",
-      "updatedAt": "2026-01-01T09:00:00Z"
+      "updatedAt": "2026-03-31T21:28:30.174Z",
+      "id": "1"
     },
     {
       "id": "2",
@@ -348,14 +365,13 @@
       "updatedAt": "2026-01-10T11:15:00Z"
     },
     {
-      "id": "4",
       "name": "Shein",
       "contact": "Sohaila Hesham",
-      "email": "sohaila.hesham456@gmail.com",
+      "email": "sohaila@shein.com",
       "phone": "+201060689680",
-      "address": "Teraa, st",
-      "createdAt": "2026-02-01T14:00:00Z",
-      "updatedAt": "2026-02-01T14:00:00Z"
+      "address": "Mansoura,Egypt",
+      "updatedAt": "2026-03-31T21:35:22.909Z",
+      "id": "4"
     }
   ],
   "orders": [
@@ -653,6 +669,27 @@
       "orderDate": "2026-03-31",
       "createdAt": "2026-03-31T17:23:08.012Z",
       "updatedAt": "2026-03-31T17:23:15.516Z"
+    },
+    {
+      "id": "3477",
+      "supplierId": "4",
+      "expectedDate": "",
+      "items": [
+        {
+          "productId": "5814",
+          "productName": "Yellow Pants",
+          "quantity": 10
+        },
+        {
+          "productId": "df4a",
+          "productName": "Blue T-shirt",
+          "quantity": 5
+        }
+      ],
+      "status": "received",
+      "orderDate": "2026-03-31",
+      "createdAt": "2026-03-31T20:33:06.087Z",
+      "updatedAt": "2026-03-31T21:28:53.590Z"
     }
   ],
   "stockAdjustments": [
@@ -900,6 +937,69 @@
       "timestamp": "3/31/2026, 7:23:15 PM",
       "createdAt": "2026-03-31T17:23:15.526Z",
       "updatedAt": "2026-03-31T17:23:15.526Z"
+    },
+    {
+      "id": "d2cf",
+      "action": "CREATE_PRODUCT",
+      "details": "New product added: Yellow Pants (YP-020)",
+      "user": "admin",
+      "timestamp": "2026-03-31T20:32:31.428Z",
+      "createdAt": "2026-03-31T20:32:31.428Z",
+      "updatedAt": "2026-03-31T20:32:31.428Z"
+    },
+    {
+      "id": "ee99",
+      "action": "CREATE_PURCHASE_ORDER",
+      "details": "Purchase Order created — 2 item(s)",
+      "user": "[object Object]",
+      "timestamp": "2026-03-31T20:33:06.099Z",
+      "createdAt": "2026-03-31T20:33:06.100Z",
+      "updatedAt": "2026-03-31T20:33:06.100Z"
+    },
+    {
+      "id": "5093",
+      "action": "LOG_OUT",
+      "details": "Admin User logged out",
+      "user": "Admin User",
+      "timestamp": "31/03/2026, 23:17:22",
+      "createdAt": "2026-03-31T21:17:22.688Z",
+      "updatedAt": "2026-03-31T21:17:22.688Z"
+    },
+    {
+      "id": "07d2",
+      "action": "LOG_IN",
+      "details": "Sohaila Hesham logged in",
+      "user": "Sohaila Hesham",
+      "timestamp": "31/03/2026, 23:17:35",
+      "createdAt": "2026-03-31T21:17:35.737Z",
+      "updatedAt": "2026-03-31T21:17:35.737Z"
+    },
+    {
+      "id": "9530",
+      "action": "CREATE_PRODUCT",
+      "details": "New product added: new clothes (NC-100)",
+      "user": "admin",
+      "timestamp": "2026-03-31T21:18:25.671Z",
+      "createdAt": "2026-03-31T21:18:25.671Z",
+      "updatedAt": "2026-03-31T21:18:25.671Z"
+    },
+    {
+      "id": "d21d",
+      "action": "DELETE_CATEGORY",
+      "details": "Category deleted: food",
+      "user": "admin",
+      "timestamp": "2026-03-31T21:18:48.573Z",
+      "createdAt": "2026-03-31T21:18:48.573Z",
+      "updatedAt": "2026-03-31T21:18:48.573Z"
+    },
+    {
+      "id": "9a53",
+      "action": "RECEIVE_ORDER",
+      "details": "Receive Order that was created in 2026-03-31 that contains 2 item",
+      "user": "Sohaila Hesham",
+      "timestamp": "31/03/2026, 23:28:53",
+      "createdAt": "2026-03-31T21:28:53.602Z",
+      "updatedAt": "2026-03-31T21:28:53.602Z"
     }
   ],
   "lowStockAlerts": [

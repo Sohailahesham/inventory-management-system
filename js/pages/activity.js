@@ -1,6 +1,6 @@
 import { fetchData } from "../services/api.js";
 import renderPagination, { paginateData } from "../components/pagination.js";
-import { activityRowHtml } from "../utils/helpers.js";
+import { activityRowHtml, sortData } from "../utils/helpers.js";
 
 let activities = [];
 let lastFiltered = [];
@@ -18,13 +18,13 @@ async function loadData() {
   //^ get activity data
   activities = await fetchData("activityLog");
   //^ sort them by newest first based on data to make it by default sorted
-  activities.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  activities = sortData(activities);
 }
 
 //* build the rows section with pagination applied
 function getActivityListHtml(data = lastFiltered) {
   const paginated = paginateData(data, currentPage, PAGE_SIZE);
-  const rows = paginated.map(data=> activityRowHtml(data)).join("");
+  const rows = paginated.map((data) => activityRowHtml(data)).join("");
   const list = rows
     ? rows
     : '<p class="text-muted text-center py-3">No activity found.</p>';
@@ -41,7 +41,7 @@ function getActivityListHtml(data = lastFiltered) {
 function renderActivities() {
   const html = `
     <!-- Filter bar -->
-    <div class="d-flex gap-2 mb-3 align-items-center p-3 bg-white rounded border">
+    <div class="d-flex gap-2 mb-3 align-items-center p-3 bg-white rounded border page-filter-bar">
       <i class="bi bi-search text-muted"></i>
       <input type="text" id="searchActivity" placeholder="Search activity..."
         class="form-control form-control-sm border-0 shadow-none">
@@ -72,7 +72,7 @@ function renderActivities() {
 
 //* filter by search text Or type filter
 function filterActivities() {
-  //^1. get value for search input and filter 
+  //^1. get value for search input and filter
   const searchTerm = document
     .getElementById("searchActivity")
     .value.toLowerCase();
@@ -85,20 +85,19 @@ function filterActivities() {
     return true;
   });
 
-  //^ set current page to one 
+  //^ set current page to one
   currentPage = 1;
   //^ render content in page based on new data filter
   updateActivityContent();
-  //^ render new status 
+  //^ render new status
   updateStats();
 }
 
 //* re-render only the list + pagination
 function updateActivityContent() {
-  document.getElementById("activityContent").innerHTML =
-    getActivityListHtml();
+  document.getElementById("activityContent").innerHTML = getActivityListHtml();
 }
-//* if user made any search with input search or filter then we will show to him number of found it element 
+//* if user made any search with input search or filter then we will show to him number of found it element
 function updateStats() {
   const statsDiv = document.getElementById("searchStats");
   if (!statsDiv) return;
@@ -111,7 +110,7 @@ function updateStats() {
 }
 
 function setupEventListeners() {
-  //* 1. search 
+  //* 1. search
   document
     .getElementById("searchActivity")
     ?.addEventListener("input", filterActivities);

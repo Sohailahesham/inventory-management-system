@@ -25,7 +25,7 @@ async function loadData() {
 
 function renderSuppliers() {
   let html = `
-  <div class="d-flex gap-2 mb-3 align-items-center flex-wrap p-3 bg-white rounded border">
+  <div class="d-flex gap-2 mb-3 align-items-center flex-wrap p-3 bg-white rounded border page-filter-bar">
   <i class="bi bi-search text-muted d-none d-sm-block"></i>
   <input type="text" id="searchSup" placeholder="Search suppliers..."
     class="form-control form-control-sm border-0 shadow-none" style="flex:1; min-width:150px;">
