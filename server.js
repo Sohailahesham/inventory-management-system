@@ -1,25 +1,21 @@
-const jsonServer = require("json-server");
-const path = require("path");
-const express = require("express");
+import jsonServer from "json-server";
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const router = jsonServer.router(path.join(__dirname, "data/db.json"));
+const router = jsonServer.router("data/db.json");
 const middlewares = jsonServer.defaults();
 
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(middlewares);
-app.use(express.static(path.join(__dirname, "/")));
-
-// API routes
+app.use(express.static(__dirname));
 app.use("/api", router);
 
-// fallback للـ frontend
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
-
 app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
+  console.log("Server running");
 });
