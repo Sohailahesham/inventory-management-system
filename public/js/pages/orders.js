@@ -3,7 +3,7 @@ import { fetchData, postData, updateData } from "../services/api.js";
 import { getModal } from "../components/modal.js";
 import renderPagination, { paginateData } from "../components/pagination.js";
 import { sortData } from "../utils/helpers.js";
-import {getCurrentUser} from "../pages/login.js";
+import {getCurrentUser} from "./login.js";
 let products = [];
 let categories = [];
 let suppliers = [];
