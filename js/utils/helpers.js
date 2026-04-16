@@ -133,7 +133,7 @@ function isValidEmail(email) {
   }
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
-    document.querySelector(".errorMes-contact").innerHTML =
+    document.querySelector(".errorMes-email").innerHTML =
       `Email must be like this vaild format  something@domain.com`;
     return false;
   }
@@ -353,8 +353,7 @@ export function getActionStyle(action = "") {
     return { color: "danger", label: "delete" };
   if (safeAction.includes("LOW_STOCK_ALERT"))
     return { color: "danger", label: "alert" };
-  if (safeAction.includes("LOG_IN"))
-    return { color: "info", label: "login" };
+  if (safeAction.includes("LOG_IN")) return { color: "info", label: "login" };
   if (safeAction.includes("LOG_OUT"))
     return { color: "secondary", label: "logout" };
   return { color: "secondary", label: "info" };

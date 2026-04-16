@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:3000";
+// const API_URL = "http://localhost:3000";
+const API_URL = "../../data/db.json";
 
 export async function fetchData(endpoint) {
   try {

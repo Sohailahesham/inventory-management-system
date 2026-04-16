@@ -272,11 +272,11 @@
       "categoryId": "4",
       "supplierId": "4",
       "price": "1000",
-      "quantity": 10,
+      "quantity": 20,
       "reorderLevel": "5",
       "unit": "box",
       "createdAt": "2026-03-31T13:39:41.135Z",
-      "updatedAt": "2026-03-31T21:28:53.618Z"
+      "updatedAt": "2026-04-01T20:57:44.616Z"
     },
     {
       "id": "5814",
@@ -285,11 +285,11 @@
       "categoryId": "4",
       "supplierId": "4",
       "price": "500",
-      "quantity": 14,
+      "quantity": 34,
       "reorderLevel": "10",
       "unit": "box",
       "createdAt": "2026-03-31T20:32:31.407Z",
-      "updatedAt": "2026-03-31T21:28:53.611Z"
+      "updatedAt": "2026-04-01T20:57:44.627Z"
     },
     {
       "id": "4275",
@@ -328,9 +328,9 @@
       "updatedAt": "2026-01-01T08:00:00Z"
     },
     {
-      "name": "Clothess",
+      "name": "Clothes",
       "description": "Everything human wears",
-      "updatedAt": "2026-03-31T21:34:30.963Z",
+      "updatedAt": "2026-04-08T17:00:32.773Z",
       "id": "4"
     }
   ],
@@ -690,6 +690,48 @@
       "orderDate": "2026-03-31",
       "createdAt": "2026-03-31T20:33:06.087Z",
       "updatedAt": "2026-03-31T21:28:53.590Z"
+    },
+    {
+      "id": "c4ce",
+      "supplierId": "4",
+      "expectedDate": "",
+      "items": [
+        {
+          "productId": "df4a",
+          "productName": "Blue T-shirt",
+          "quantity": 10
+        },
+        {
+          "productId": "5814",
+          "productName": "Yellow Pants",
+          "quantity": 20
+        }
+      ],
+      "status": "received",
+      "orderDate": "2026-04-01",
+      "createdAt": "2026-04-01T20:57:27.981Z",
+      "updatedAt": "2026-04-01T20:57:44.595Z"
+    },
+    {
+      "id": "bbc9",
+      "supplierId": "1",
+      "expectedDate": "",
+      "items": [
+        {
+          "productId": "9",
+          "productName": "Mechanical Keyboard",
+          "quantity": 10
+        },
+        {
+          "productId": "2",
+          "productName": "Wireless Mouse",
+          "quantity": 15
+        }
+      ],
+      "status": "pending",
+      "orderDate": "2026-04-08",
+      "createdAt": "2026-04-08T17:03:06.757Z",
+      "updatedAt": "2026-04-08T17:03:06.757Z"
     }
   ],
   "stockAdjustments": [
@@ -1000,6 +1042,123 @@
       "timestamp": "31/03/2026, 23:28:53",
       "createdAt": "2026-03-31T21:28:53.602Z",
       "updatedAt": "2026-03-31T21:28:53.602Z"
+    },
+    {
+      "id": "f755",
+      "action": "LOG_OUT",
+      "details": "Sohaila Hesham logged out",
+      "user": "Sohaila Hesham",
+      "timestamp": "01/04/2026, 22:44:38",
+      "createdAt": "2026-04-01T20:44:38.824Z",
+      "updatedAt": "2026-04-01T20:44:38.824Z"
+    },
+    {
+      "id": "5edd",
+      "action": "LOG_IN",
+      "details": "Sohaila Hesham logged in",
+      "user": "Sohaila Hesham",
+      "timestamp": "01/04/2026, 22:46:54",
+      "createdAt": "2026-04-01T20:46:54.433Z",
+      "updatedAt": "2026-04-01T20:46:54.433Z"
+    },
+    {
+      "id": "f784",
+      "action": "DELETE_CATEGORY",
+      "details": "Category deleted: food",
+      "user": "admin",
+      "timestamp": "2026-04-01T20:50:12.654Z",
+      "createdAt": "2026-04-01T20:50:12.654Z",
+      "updatedAt": "2026-04-01T20:50:12.654Z"
+    },
+    {
+      "id": "2633",
+      "action": "DELETE_SUPPLIER",
+      "details": "Supplier deleted: egyFood",
+      "user": "admin",
+      "timestamp": "2026-04-01T20:55:31.087Z",
+      "createdAt": "2026-04-01T20:55:31.087Z",
+      "updatedAt": "2026-04-01T20:55:31.087Z"
+    },
+    {
+      "id": "950f",
+      "action": "CREATE_PURCHASE_ORDER",
+      "details": "Purchase Order created — 2 item(s)",
+      "user": "[object Object]",
+      "timestamp": "2026-04-01T20:57:27.998Z",
+      "createdAt": "2026-04-01T20:57:27.998Z",
+      "updatedAt": "2026-04-01T20:57:27.998Z"
+    },
+    {
+      "id": "393b",
+      "action": "RECEIVE_ORDER",
+      "details": "Receive Order that was created in 2026-04-01 that contains 2 item",
+      "user": "Sohaila Hesham",
+      "timestamp": "01/04/2026, 22:57:44",
+      "createdAt": "2026-04-01T20:57:44.609Z",
+      "updatedAt": "2026-04-01T20:57:44.609Z"
+    },
+    {
+      "id": "ee20",
+      "action": "LOG_OUT",
+      "details": "Sohaila Hesham logged out",
+      "user": "Sohaila Hesham",
+      "timestamp": "08/04/2026, 18:57:33",
+      "createdAt": "2026-04-08T16:57:33.641Z",
+      "updatedAt": "2026-04-08T16:57:33.641Z"
+    },
+    {
+      "id": "a839",
+      "action": "LOG_IN",
+      "details": "Sohaila Hesham logged in",
+      "user": "Sohaila Hesham",
+      "timestamp": "08/04/2026, 18:58:07",
+      "createdAt": "2026-04-08T16:58:07.438Z",
+      "updatedAt": "2026-04-08T16:58:07.438Z"
+    },
+    {
+      "id": "e123",
+      "action": "CREATE_PURCHASE_ORDER",
+      "details": "Purchase Order created — 2 item(s)",
+      "user": "[object Object]",
+      "timestamp": "2026-04-08T17:03:06.768Z",
+      "createdAt": "2026-04-08T17:03:06.768Z",
+      "updatedAt": "2026-04-08T17:03:06.768Z"
+    },
+    {
+      "id": "e9d3",
+      "action": "LOG_OUT",
+      "details": "Sohaila Hesham logged out",
+      "user": "Sohaila Hesham",
+      "timestamp": "08/04/2026, 19:06:00",
+      "createdAt": "2026-04-08T17:06:00.683Z",
+      "updatedAt": "2026-04-08T17:06:00.683Z"
+    },
+    {
+      "id": "6922",
+      "action": "LOG_IN",
+      "details": "Sohaila Hesham logged in",
+      "user": "Sohaila Hesham",
+      "timestamp": "08/04/2026, 19:07:18",
+      "createdAt": "2026-04-08T17:07:18.186Z",
+      "updatedAt": "2026-04-08T17:07:18.186Z"
+    },
+    {
+      "id": "8e3c",
+      "action": "LOG_OUT",
+      "details": "Sohaila Hesham logged out",
+      "user": "Sohaila Hesham",
+      "timestamp": "08/04/2026, 20:19:36",
+      "createdAt": "2026-04-08T18:19:36.718Z",
+      "updatedAt": "2026-04-08T18:19:36.718Z"
+    },
+    {
+      "id": "438a",
+      "action": "LOG_OUT",
+      "details": "Unknown logged out",
+      "user": "Unknown",
+      "timestamp": "08/04/2026, 20:20:34",
+      "createdAt": "2026-04-08T18:20:34.379Z",
+      "updatedAt": "2026-04-08T18:20:34.379Z"
     }
   ],
   "lowStockAlerts": [
